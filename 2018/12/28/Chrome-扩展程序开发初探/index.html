@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="近期想获取一个网页聊天室的最新消息，聊天室是用 js 写的，通过网页源代码看到的 js 代码也非常之混乱，应该是经过混淆处理，原本想通过研究源码用 python 来获取的方式告负。经过几番摸索，发现可以通过浏览器的 Console 输入 js 代码，可以获取到已经加载出来的界面信息，这样只要定时获取到最后一条消息即可。那该怎么去做呢？第一时间就想到了 Chrome 扩展程序，Chrome浏览器一直">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chrome 扩展程序开发初探">
+<meta property="og:url" content="http://yoursite.com/2018/12/28/Chrome-扩展程序开发初探/index.html">
+<meta property="og:site_name" content="对象村">
+<meta property="og:description" content="近期想获取一个网页聊天室的最新消息，聊天室是用 js 写的，通过网页源代码看到的 js 代码也非常之混乱，应该是经过混淆处理，原本想通过研究源码用 python 来获取的方式告负。经过几番摸索，发现可以通过浏览器的 Console 输入 js 代码，可以获取到已经加载出来的界面信息，这样只要定时获取到最后一条消息即可。那该怎么去做呢？第一时间就想到了 Chrome 扩展程序，Chrome浏览器一直">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fyma5fabwhj308w07y0sp.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwgy1fymeomo548j30oi07mwei.jpg">
+<meta property="og:updated_time" content="2019-03-07T01:41:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chrome 扩展程序开发初探">
+<meta name="twitter:description" content="近期想获取一个网页聊天室的最新消息，聊天室是用 js 写的，通过网页源代码看到的 js 代码也非常之混乱，应该是经过混淆处理，原本想通过研究源码用 python 来获取的方式告负。经过几番摸索，发现可以通过浏览器的 Console 输入 js 代码，可以获取到已经加载出来的界面信息，这样只要定时获取到最后一条消息即可。那该怎么去做呢？第一时间就想到了 Chrome 扩展程序，Chrome浏览器一直">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fyma5fabwhj308w07y0sp.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/28/Chrome-扩展程序开发初探/">
+
+
+
+
+
+  <title>Chrome 扩展程序开发初探 | 对象村</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">对象村</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/28/Chrome-扩展程序开发初探/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MK">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="对象村">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Chrome 扩展程序开发初探</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-28T13:47:24+08:00">
+                2018-12-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>近期想获取一个网页聊天室的最新消息，聊天室是用 js 写的，通过网页源代码看到的 js 代码也非常之混乱，应该是经过混淆处理，原本想通过研究源码用 python 来获取的方式告负。经过几番摸索，发现可以通过浏览器的 Console 输入 js 代码，可以获取到已经加载出来的界面信息，这样只要定时获取到最后一条消息即可。那该怎么去做呢？第一时间就想到了 Chrome 扩展程序，Chrome浏览器一直用着别人的扩展程序，是不是自己也可以写一个完成自己的需求，说做就做。<br><a id="more"></a></p>
+<p>官方文档：<a href="https://developer.chrome.com/extensions" target="_blank" rel="noopener">https://developer.chrome.com/extensions</a></p>
+<p>官网有各种示例，我们下载一个入门级的：<a href="https://developer.chrome.com/extensions/examples/tutorials/hello_extensions.zip" target="_blank" rel="noopener">Hello Extensions</a> ，在此基础上进行开发。示例很简单，就三个文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hello_extensions.png</span><br><span class="line">hello.html</span><br><span class="line">manifest.json</span><br></pre></td></tr></table></figure>
+<p>浏览器中输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chrome://extensions</span><br></pre></td></tr></table></figure>
+<p>就会进入谷歌浏览器的扩展程序界面，这里会列出你已经安装的扩展程序，在界面的右上角有一个<code>开发者模式</code>的开关，打开，然后点击 <code>加载已解压的扩展程序</code> 选择刚刚下载的 Hello Extensions，现在我们就可以在地址栏的右边看到一个 Hi 的图标</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fyma5fabwhj308w07y0sp.jpg" alt></p>
+<p>现在来看看那三个文件</p>
+<p>hello_extensions.png</p>
+<p>这个就是图片文件，没啥说的</p>
+<p>hello.html</p>
+<p>这个是我们点击 Hi 图标时显示的内容，文件内容也很简单，我们之后可以根据自己的需求编写内容</p>
+<p>manifest.json</p>
+<p>这个主要的，是扩展程序的配置文件，来看下里面的内容</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "name": "Hello Extensions", // 插件的名称</span><br><span class="line">  "description" : "Base Level Extension",  // 插件描述</span><br><span class="line">  "version": "1.0",  // 插件的版本</span><br><span class="line">  "browser_action": &#123;// 浏览器右上角图标设置</span><br><span class="line">    "default_popup": "hello.html",</span><br><span class="line">    "default_icon": "hello_extensions.png"</span><br><span class="line">  &#125;,</span><br><span class="line">  "manifest_version": 2,   // 清单文件的版本，这个必须写，而且必须是2</span><br><span class="line">  "commands": &#123;// 快捷键</span><br><span class="line">    "_execute_browser_action": &#123;</span><br><span class="line">      "suggested_key": &#123;</span><br><span class="line">        "default": "Ctrl+Shift+F",</span><br><span class="line">        "mac": "MacCtrl+Shift+F"</span><br><span class="line">      &#125;,</span><br><span class="line">      "description": "Opens hello.html"</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>至此，我们先撸撸需求，只去学习相应的知识点就可以了。现在我的需求是获取网页的信息，很简单的一个需求，通过一番研究，做到以下两点即可：</p>
+<blockquote>
+<p>1、在 background 中过滤自己要获取的网页</p>
+<p>2、在 content_scripts 中获取网页信息</p>
+</blockquote>
+<p>我们以 <a href="http://www.githubrank.com/" target="_blank" rel="noopener">http://www.githubrank.com/</a> 网址为例，信息嘛，那就获取数量排名总数量吧</p>
+<p>首先我们新建 background. js 和 contentScript.js 文件，然后在配置文件 manifest.json 中</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "name": "Hello Extensions", // 插件的名称</span><br><span class="line">  "description" : "Base Level Extension",  // 插件描述</span><br><span class="line">  "version": "1.0",  // 插件的版本</span><br><span class="line">  "manifest_version": 2,   // 清单文件的版本，这个必须写，而且必须是2</span><br><span class="line"></span><br><span class="line">    // 会一直常驻的后台 JS 或后台页面</span><br><span class="line">  "background":&#123;</span><br><span class="line">    // 2种指定方式，如果指定 JS，那么会自动生成一个背景页</span><br><span class="line">    // "page": "background.html"</span><br><span class="line">    "scripts":["background.js"],</span><br><span class="line">    "persistent":false</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">    // 当某些特定页面打开才显示的图标</span><br><span class="line">  "page_action": &#123;</span><br><span class="line">    "default_title": "Hello Extensions",</span><br><span class="line">    "default_icon": "hello_extensions.png",</span><br><span class="line">    "default_popup": "hello.html"</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  // page_action 和 browser_action 存一即可</span><br><span class="line">  // "browser_action": &#123;// 浏览器右上角图标设置</span><br><span class="line">  //   "default_popup": "hello.html",</span><br><span class="line">  //   "default_icon": "hello_extensions.png"</span><br><span class="line">  // &#125;,</span><br><span class="line"></span><br><span class="line">  // 权限申请</span><br><span class="line">  "permissions":[</span><br><span class="line">    <span class="string">"declarativeContent"</span></span><br><span class="line">  ],</span><br><span class="line"></span><br><span class="line">  // 需要直接注入页面的JS</span><br><span class="line">  "content_scripts":[</span><br><span class="line">    &#123;</span><br><span class="line">      // "&lt;all_urls&gt;" 表示匹配所有地址</span><br><span class="line">      // "matches": ["&lt;all_urls&gt;"],</span><br><span class="line">      "matches": [ "http://www.githubrank.com/*" ],</span><br><span class="line">      // 多个JS按顺序注入</span><br><span class="line">      "js":["contentScript.js"],</span><br><span class="line">      // 代码注入的时间，可选值： "document_start", "document_end", or "document_idle"，最后一个表示页面空闲时，默认document_idle</span><br><span class="line">      "run_at": "document_idle"</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line"></span><br><span class="line"> // 快捷键</span><br><span class="line">  "commands": &#123;</span><br><span class="line">    "_execute_browser_action": &#123;</span><br><span class="line">      "suggested_key": &#123;</span><br><span class="line">        "default": "Ctrl+Shift+F",</span><br><span class="line">        "mac": "MacCtrl+Shift+F"</span><br><span class="line">      &#125;,</span><br><span class="line">      "description": "Opens hello.html"</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="background"><a href="#background" class="headerlink" title="background"></a>background</h4><p>是一个常驻的页面，它的生命周期是插件中所有类型页面中最长的，它随着浏览器的打开而打开，随着浏览器的关闭而关闭，所以通常把需要一直运行的、启动就运行的、全局的代码放在background里面。</p>
+<p>配置中，<code>background</code> 可以通过 <code>page</code>指定一张网页，也可以通过 <code>scripts</code> 直接指定一个 JS，Chrome 会自动为这个 JS 生成一个默认的网页。根据我们的需求，这里只做一个过滤显示设置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">chrome.runtime.onInstalled.addListener(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    chrome.declarativeContent.onPageChanged.removeRules(<span class="literal">undefined</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        chrome.declarativeContent.onPageChanged.addRules([&#123;</span><br><span class="line">            conditions: [</span><br><span class="line">                 <span class="comment">// 只有打开 githubrank 才显示 pageAction</span></span><br><span class="line">                <span class="keyword">new</span> chrome.declarativeContent.PageStateMatcher(&#123;</span><br><span class="line">                    pageUrl: &#123; <span class="attr">urlContains</span>: <span class="string">'githubrank.com'</span> &#125;</span><br><span class="line">                &#125;)</span><br><span class="line">            ],</span><br><span class="line">            actions: [<span class="keyword">new</span> chrome.declarativeContent.ShowPageAction()]</span><br><span class="line">        &#125;]);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="content-scripts"><a href="#content-scripts" class="headerlink" title="content_scripts"></a>content_scripts</h4><p>所谓 <a href="https://developer.chrome.com/extensions/content_scripts" target="_blank" rel="noopener">content-scripts</a>，其实就是 Chrome 插件中向页面注入脚本的一种形式（虽然名为 script，其实还可以包括 css 的），借助 <code>content-scripts</code> 我们可以实现通过配置的方式轻松向指定页面注入 JS 和 CSS（如果需要动态注入，可以参考下文），最常见的比如：广告屏蔽、页面 CSS 定制，等等。</p>
+<p>根据我们的需求，只需要简单的  js 即可</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alert(<span class="string">"排名数量："</span>+<span class="built_in">document</span>.getElementsByClassName(<span class="string">'avatar'</span>).length)</span><br></pre></td></tr></table></figure>
+<p>然后我们刷新扩展程序，刷新 <a href="http://www.githubrank.com" target="_blank" rel="noopener">www.githubrank.com</a> 页面，即可看到</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwgy1fymeomo548j30oi07mwei.jpg" alt></p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>以上只是一个简单演示，也算自己的一个记录，对于更复杂的需求，可以根据官方文档学习更多知识，完成自己的需求，网上也有人整理得比较好的文章：</p>
+<p><a href="https://www.cnblogs.com/liuxianan/p/chrome-plugin-develop.html" target="_blank" rel="noopener">https://www.cnblogs.com/liuxianan/p/chrome-plugin-develop.html</a></p>
+<p>仅此记录</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/15/Python-Scrapy-库的使用/" rel="next" title="Python Scrapy 库的使用">
+                <i class="fa fa-chevron-left"></i> Python Scrapy 库的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/07/JavaScript-的-for-循环/" rel="prev" title="JavaScript 的 for 循环">
+                JavaScript 的 for 循环 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">MK</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#background"><span class="nav-number">1.</span> <span class="nav-text">background</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#content-scripts"><span class="nav-number">2.</span> <span class="nav-text">content_scripts</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MK</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

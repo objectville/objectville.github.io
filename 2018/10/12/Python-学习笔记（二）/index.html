@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Python 数字类型及操作 整数类型 浮点数类型 复数类型 数值运算操作符 数值运算函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 学习笔记（二）">
+<meta property="og:url" content="http://yoursite.com/2018/10/12/Python-学习笔记（二）/index.html">
+<meta property="og:site_name" content="对象村">
+<meta property="og:description" content="Python 数字类型及操作 整数类型 浮点数类型 复数类型 数值运算操作符 数值运算函数">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-07T01:41:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python 学习笔记（二）">
+<meta name="twitter:description" content="Python 数字类型及操作 整数类型 浮点数类型 复数类型 数值运算操作符 数值运算函数">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/12/Python-学习笔记（二）/">
+
+
+
+
+
+  <title>Python 学习笔记（二） | 对象村</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">对象村</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/12/Python-学习笔记（二）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MK">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="对象村">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python 学习笔记（二）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-12T17:17:24+08:00">
+                2018-10-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Python-数字类型及操作"><a href="#Python-数字类型及操作" class="headerlink" title="Python 数字类型及操作"></a>Python 数字类型及操作</h3><ul>
+<li>整数类型</li>
+<li>浮点数类型</li>
+<li>复数类型</li>
+<li>数值运算操作符</li>
+<li>数值运算函数</li>
+</ul>
+<a id="more"></a>
+<h4 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h4><p>与数学中整数的概念一致</p>
+<ul>
+<li><p>可正可负，没有取值范围限制</p>
+</li>
+<li><p>pow(x,y) 函数：计算 x 的 y 次方，想算多大算多大</p>
+</li>
+</ul>
+<p>4 种进制表示形式</p>
+<ul>
+<li>十进制：1010, 99, -217</li>
+<li>二进制，以0b或0B开头：0b010, -0B101</li>
+<li>八进制，以0o或0O开头：0o123, -0O456</li>
+<li>十六进制，以0x或0X开头：0x9a, -0X89</li>
+</ul>
+<h4 id="浮点数类型"><a href="#浮点数类型" class="headerlink" title="浮点数类型"></a>浮点数类型</h4><p>与数学中实数的概念一致</p>
+<ul>
+<li>带有小数点及小数的数字</li>
+<li>取值范围数量级约 -10 的 307 次方 至 10 的 308 次方，精度数量级 10 的 -16 次方</li>
+</ul>
+<p>浮点数间运算存在不确定尾数，不是bug。原因：机器用 53 位二进制表示小数部分，约 10 的 -16 次方，可以无限接近，但不完全相同，当转换为十进制表示时，就可能存在不确定尾数。</p>
+<ul>
+<li><p>round(x, d)：对 x 四舍五入，d 是小数截取位数</p>
+</li>
+<li><p>不确定尾数一般发生在 10 的 -16 次方左右，round() 十分有效</p>
+</li>
+</ul>
+<p>浮点数可以采用科学计数法表示</p>
+<ul>
+<li>使用字母e或E作为幂的符号，以10为基数</li>
+<li>例如：4.3e-3 值为0.0043，9.6E5 值为960000.0</li>
+</ul>
+<h4 id="复数类型"><a href="#复数类型" class="headerlink" title="复数类型"></a>复数类型</h4><p>与数学中复数的概念一致</p>
+<p>如果 x 的 2 次方 = -1，那么 x 的值什么？</p>
+<ul>
+<li>定义 j = −𝟏 开根号 ，以此为基础，构建数学体系</li>
+<li>a+bj 被称为复数，其中，a 是实部，b 是虚部</li>
+</ul>
+<h4 id="数值运算操作符"><a href="#数值运算操作符" class="headerlink" title="数值运算操作符"></a>数值运算操作符</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">操作符及使用</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">x + y</td>
+<td style="text-align:center">加，x与y之和</td>
+</tr>
+<tr>
+<td style="text-align:center">x – y</td>
+<td style="text-align:center">减，x与y之差</td>
+</tr>
+<tr>
+<td style="text-align:center">x * y</td>
+<td style="text-align:center">乘，x与y之积</td>
+</tr>
+<tr>
+<td style="text-align:center">x / y</td>
+<td style="text-align:center">除，x与y之商 10/3结果是3.3333333333333335</td>
+</tr>
+<tr>
+<td style="text-align:center">x // y</td>
+<td style="text-align:center">整数除，x与y之整数商 10//3结果是3</td>
+</tr>
+<tr>
+<td style="text-align:center">+ x</td>
+<td style="text-align:center">x本身</td>
+</tr>
+<tr>
+<td style="text-align:center">- y</td>
+<td style="text-align:center">x的负值</td>
+</tr>
+<tr>
+<td style="text-align:center">x % y</td>
+<td style="text-align:center">余数，模运算 10%3结果是1</td>
+</tr>
+<tr>
+<td style="text-align:center">x ** y</td>
+<td style="text-align:center">幂运算，x的y次幂，当y是小数时，开方运算10**0.5结果是根号10</td>
+</tr>
+</tbody>
+</table>
+<p>整数与浮点数进行运算时，结果为浮点数</p>
+<h4 id="数值运算函数"><a href="#数值运算函数" class="headerlink" title="数值运算函数"></a>数值运算函数</h4><ul>
+<li>abs(x) 绝对值，x的绝对值</li>
+<li>divmod(x,y) 商余，(x//y, x%y)，同时输出商和余数， divmod(10, 3) 结果为 (3, 1)</li>
+<li>pow(x, y[, z]) 幂余，(x**y)%z，[..] 表示参数 z 可省略，pow(3, pow(3, 99)，10000) 结果为 4587</li>
+<li>round(x[, d]) 四舍五入，d 是保留小数位数，默认值为 0</li>
+<li>max(x1,x2, … ,xn) 最大值，返回 x1,x2, … ,xn 中的最大值，n不限</li>
+<li>min(x1,x2, … ,xn) 最小值，返回 x1,x2, … ,xn 中的最小值，n不限</li>
+<li>int(x) 将 x 变成整数，舍弃小数部分， int(123.45) 结果为 123； int(“123”) 结果为 123</li>
+<li>float(x) 将 x 变成浮点数，增加小数部分 float(12) 结果为 12.0； float(“1.23”) 结果为 1.23</li>
+<li>complex(x)  将 x 变成复数，增加虚数部分 complex(4) 结果为 4 + 0j</li>
+</ul>
+<h4 id="工作日的力量示例"><a href="#工作日的力量示例" class="headerlink" title="工作日的力量示例"></a>工作日的力量示例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">dayup = <span class="number">1.0</span></span><br><span class="line">dayfactor = <span class="number">0.01</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">365</span>):</span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">7</span> <span class="keyword">in</span> [<span class="number">6</span>,<span class="number">0</span>]:</span><br><span class="line">        dayup = dayup*(<span class="number">1</span>-dayfactor)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        dayup = dayup*(<span class="number">1</span>+dayfactor)</span><br><span class="line">print(<span class="string">"工作日的力量：&#123;:.2f&#125; "</span>.format(dayup))</span><br></pre></td></tr></table></figure>
+<h3 id="字符串类型及操作"><a href="#字符串类型及操作" class="headerlink" title="字符串类型及操作"></a>字符串类型及操作</h3><ul>
+<li>字符串类型的表示</li>
+<li>字符串操作符</li>
+<li>字符串处理函数</li>
+<li>字符串处理方法</li>
+<li>字符串类型的格式化</li>
+</ul>
+<h4 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h4><p>字符串由一对单引号或一对双引号表示</p>
+<ul>
+<li><p>由一对单引号或双引号表示，仅表示单行字符串</p>
+</li>
+<li><p>由一对三单引号或三双引号表示，可表示多行字符串</p>
+</li>
+</ul>
+<p>使用[ ]获取字符串中一个或多个字符</p>
+<ul>
+<li>索引：返回字符串中单个字符 &lt;字符串&gt;[M]</li>
+<li>切片：返回字符串中一段字符子串 &lt;字符串&gt;[M: N]</li>
+</ul>
+<h5 id="字符串切片高级用法"><a href="#字符串切片高级用法" class="headerlink" title="字符串切片高级用法"></a>字符串切片高级用法</h5><ul>
+<li>&lt;字符串&gt;[M: N]，M 缺失表示至开头，N 缺失表示至结尾</li>
+<li>&lt;字符串&gt;[M: N: K]，根据步长K对字符串切片</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"〇一二三四五六七八九十"</span>[<span class="number">1</span>:<span class="number">8</span>:<span class="number">2</span>] <span class="comment"># "一三五七"</span></span><br><span class="line"><span class="string">"〇一二三四五六七八九十"</span>[::<span class="number">-1</span>] <span class="comment"># "十九八七六五四三二一〇"</span></span><br></pre></td></tr></table></figure>
+<h5 id="字符串的特殊字符"><a href="#字符串的特殊字符" class="headerlink" title="字符串的特殊字符"></a>字符串的特殊字符</h5><p>转义符 \</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"这里有个双引号(\")"</span>) <span class="comment"># 这里有个双引号(")</span></span><br></pre></td></tr></table></figure>
+<p>转义符形成一些组合，表达一些不可打印的含义</p>
+<ul>
+<li>“\b” 回退</li>
+<li>“\n” 换行(光标移动到下行首)</li>
+<li>“\r” 回车(光标移动到本行首)</li>
+</ul>
+<h4 id="字符串操作符"><a href="#字符串操作符" class="headerlink" title="字符串操作符"></a>字符串操作符</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">操作符及使用</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">x + y</td>
+<td style="text-align:center">连接两个字符串 x 和 y</td>
+</tr>
+<tr>
+<td style="text-align:center">n <em> x 或 x </em> n</td>
+<td style="text-align:center">复制 n 次字符串 x</td>
+</tr>
+<tr>
+<td style="text-align:center">x in s</td>
+<td style="text-align:center">如果 x 是 s 的子串，返回 True，否则返回 False</td>
+</tr>
+</tbody>
+</table>
+<h4 id="处理字符串函数"><a href="#处理字符串函数" class="headerlink" title="处理字符串函数"></a>处理字符串函数</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">函数及使用</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">len(x)</td>
+<td style="text-align:center">长度，返回字符串x的长度 len(“一二三456”) 结果为 6</td>
+</tr>
+<tr>
+<td style="text-align:center">str(x)</td>
+<td style="text-align:center">任意类型 x 所对应的字符串形式</td>
+</tr>
+<tr>
+<td style="text-align:center">hex(x) 或 oct(x)</td>
+<td style="text-align:center">整数 x 的十六进制或八进制小写形式字符串</td>
+</tr>
+<tr>
+<td style="text-align:center">chr(u)</td>
+<td style="text-align:center">x 为 Unicode 编码，返回其对应的字符</td>
+</tr>
+<tr>
+<td style="text-align:center">ord(x)</td>
+<td style="text-align:center">x 为字符，返回其对应的 Unicode 编码</td>
+</tr>
+</tbody>
+</table>
+<h4 id="字符串处理方法"><a href="#字符串处理方法" class="headerlink" title="字符串处理方法"></a>字符串处理方法</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">方法及使用</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">str.lower() 或 str.upper()</td>
+<td style="text-align:left">返回字符串的副本，全部字符小写/大写</td>
+</tr>
+<tr>
+<td style="text-align:left">str.split(sep=None)</td>
+<td style="text-align:left">返回一个列表，由 str 根据 sep 被分隔的部分组成</td>
+</tr>
+<tr>
+<td style="text-align:left">str.count(sub)</td>
+<td style="text-align:left">返回子串 sub 在 str 中出现的次数，”an apple a day”.count(“a”) 结果为 4</td>
+</tr>
+<tr>
+<td style="text-align:left">str.replace(old, new)</td>
+<td style="text-align:left">返回字符串 str 副本，所有 old 子串被替换为 new</td>
+</tr>
+<tr>
+<td style="text-align:left">str.center(width[,fillchar])</td>
+<td style="text-align:left">字符串 str 根据宽度 width 居中，fillchar 可选 <br>  “python”.center(20,”=”) 结果为 ‘=======python=======’</td>
+</tr>
+<tr>
+<td style="text-align:left">str.strip(chars)</td>
+<td style="text-align:left">从 str 中去掉在其左侧和右侧 chars 中列出的字符 <br>“= python= “.strip(“ =np”) 结果为 “ytho”</td>
+</tr>
+<tr>
+<td style="text-align:left">str.join(iter)</td>
+<td style="text-align:left">在 iter 变量除最后元素外每个元素后增加一个 str <br>“,”.join(“12345”) 结果为 “1,2,3,4,5” #主要用于字符串分隔等</td>
+</tr>
+</tbody>
+</table>
+<h4 id="字符串格式化"><a href="#字符串格式化" class="headerlink" title="字符串格式化"></a>字符串格式化</h4><p>字符串格式化使用 format() 方法，用法如下：</p>
+<p>&lt;模板字符串&gt;.format(&lt;逗号分隔的参数&gt;)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"&#123;&#125;:计算机&#123;&#125;的CPU占用率为&#123;&#125;%"</span>.format(<span class="string">"2018-10-10"</span>,<span class="string">"C"</span>,<span class="number">10</span>)</span><br><span class="line"><span class="comment"># 2018-10-10:计算机C的CPU占用率为10%</span></span><br><span class="line"><span class="string">"&#123;1&#125;:计算机&#123;0&#125;的CPU占用率为&#123;2&#125;%"</span>.format(<span class="string">"2018-10-10"</span>,<span class="string">"C"</span>,<span class="number">10</span>)</span><br><span class="line"><span class="comment"># C:计算机2018-10-10的CPU占用率为10%</span></span><br></pre></td></tr></table></figure>
+<p>{} 表示槽</p>
+<p>槽内部对格式化的配置方式：{ &lt;参数序号&gt; ： &lt;格式控制标记&gt;}</p>
+<ul>
+<li><code>:</code> 引导符号</li>
+<li>&lt;填充&gt; 用于填充的单个字符</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"&#123;0:=^6&#125;"</span>.format(<span class="string">"PYTHON"</span>) <span class="comment"># ===PYTHON===</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>&lt;对齐&gt; &lt; 左对齐 &gt; 右对齐 ^ 居中对齐</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"&#123;0:=&gt;5&#125;"</span>.format(<span class="string">"BIT"</span>) <span class="comment"># =====BIT</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>&lt;宽度&gt; 槽设定的输出宽度，只有在格式的字符串宽度小于设定宽度时有效</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"&#123;:=^5&#125;"</span>.format(<span class="string">"BIT"</span>) <span class="comment"># =BIT=</span></span><br><span class="line"><span class="string">"&#123;0:3&#125;"</span>.format(<span class="string">"PYTHON"</span>) <span class="comment"># PYTHON</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>&lt;,&gt; 数字的千位分隔符</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"&#123;0:,&#125;"</span>.format(<span class="number">12345</span>) <span class="comment"># 12,345</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>&lt;.精度&gt; 浮点数小数精度或字符串最大输出长度</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"&#123;0:,.2f&#125;"</span>.format(<span class="number">12345.678</span>) <span class="comment"># 12,345.68</span></span><br><span class="line"><span class="string">"&#123;0:.3&#125;"</span>.format(<span class="string">"PYTHON"</span>) <span class="comment"># PYT</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>&lt;类型&gt; 整数类型 b, c, d, o, x, X 浮点数类型 e, E, f, %</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"&#123;0:b&#125;,&#123;0:c&#125;,&#123;0:d&#125;,&#123;0:o&#125;,&#123;0:x&#125;,&#123;0:X&#125;"</span>.format(<span class="number">425</span>) <span class="comment"># 110101001,Ʃ,425,651,1a9,1A9</span></span><br><span class="line"><span class="string">"&#123;0:e&#125;,&#123;0:E&#125;,&#123;0:f&#125;,&#123;0:%&#125;"</span>.format(<span class="number">3.14</span>) <span class="comment"># 3.140000e+00,3.140000E+00,3.140000,314.000000%</span></span><br></pre></td></tr></table></figure>
+<h3 id="time-库的使用"><a href="#time-库的使用" class="headerlink" title="time 库的使用"></a>time 库的使用</h3><h4 id="时间获取"><a href="#时间获取" class="headerlink" title="时间获取"></a>时间获取</h4><ul>
+<li><p>time()  获取当前时间戳，即计算机内部时间值，浮点数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">time.time() <span class="comment"># 1539334105.576661</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ctime() 获取当前时间并以易读方式表示，返回字符串</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">time.ctime() <span class="comment"># Fri Oct 12 16:49:35 2018</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>gmtime() 获取当前时间，表示为计算机可处理的时间格式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">time.gmtime()</span><br><span class="line"><span class="comment"># time.struct_time(tm_year=2018, tm_mon=10, tm_mday=12, tm_hour=8, tm_min=50, tm_sec=26, tm_wday=4, tm_yday=285, tm_isdst=0)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="时间格式化"><a href="#时间格式化" class="headerlink" title="时间格式化"></a>时间格式化</h4><ul>
+<li><p>strftime(tpl, ts) tpl是格式化模板字符串，用来定义输出效果；ts是计算机内部时间类型变量</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">t = time.gmtime()</span><br><span class="line">time.strftime(<span class="string">"%Y-%m-%d %H:%M:%S"</span>, t) <span class="comment"># 2018-10-12 08:51:59</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>strptime(str, tpl) str是字符串形式的时间值；tpl是格式化模板字符串，用来定义输入效果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">timeStr = <span class="string">'2018-11-11 11:11:11'</span></span><br><span class="line">time.strptime(timeStr, <span class="string">"%Y-%m-%d %H:%M:%S"</span>)</span><br><span class="line"><span class="comment"># time.struct_time(tm_year=2018, tm_mon=11, tm_mday=11, tm_hour=11, tm_min=11, tm_sec=11, tm_wday=6, tm_yday=315, tm_isdst=-1)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="格式化控制符"><a href="#格式化控制符" class="headerlink" title="格式化控制符"></a>格式化控制符</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">格式化字符串</th>
+<th style="text-align:center">日期/时间说明</th>
+<th style="text-align:center">值范围和实例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">%Y</td>
+<td style="text-align:center">年份</td>
+<td style="text-align:center">0000~9999，例如：1900</td>
+</tr>
+<tr>
+<td style="text-align:center">%m</td>
+<td style="text-align:center">月份</td>
+<td style="text-align:center">01~12，例如：10</td>
+</tr>
+<tr>
+<td style="text-align:center">%B</td>
+<td style="text-align:center">月份名称</td>
+<td style="text-align:center">January~December，例如：April</td>
+</tr>
+<tr>
+<td style="text-align:center">%b</td>
+<td style="text-align:center">月份名称缩写</td>
+<td style="text-align:center">Jan~Dec，例如：Apr</td>
+</tr>
+<tr>
+<td style="text-align:center">%d</td>
+<td style="text-align:center">日期</td>
+<td style="text-align:center">01~31，例如：25</td>
+</tr>
+<tr>
+<td style="text-align:center">%A</td>
+<td style="text-align:center">星期</td>
+<td style="text-align:center">Monday~Sunday，例如：Wednesday</td>
+</tr>
+<tr>
+<td style="text-align:center">%a</td>
+<td style="text-align:center">星期缩写</td>
+<td style="text-align:center">Mon~Sun，例如：Wed</td>
+</tr>
+<tr>
+<td style="text-align:center">%H</td>
+<td style="text-align:center">小时（24h制）</td>
+<td style="text-align:center">00~23，例如：12</td>
+</tr>
+<tr>
+<td style="text-align:center">%h</td>
+<td style="text-align:center">小时（12h制）</td>
+<td style="text-align:center">01~12，例如：7</td>
+</tr>
+<tr>
+<td style="text-align:center">%p</td>
+<td style="text-align:center">上/下午</td>
+<td style="text-align:center">AM, PM，例如：PM</td>
+</tr>
+<tr>
+<td style="text-align:center">%M</td>
+<td style="text-align:center">分钟</td>
+<td style="text-align:center">00~59，例如：26</td>
+</tr>
+<tr>
+<td style="text-align:center">%S</td>
+<td style="text-align:center">秒</td>
+<td style="text-align:center">00~59，例如：26</td>
+</tr>
+</tbody>
+</table>
+<h4 id="程序计时"><a href="#程序计时" class="headerlink" title="程序计时"></a>程序计时</h4><ul>
+<li><p>perf_counter() 返回一个 CPU 级别的精确时间计数值，单位为秒，由于这个计数值起点不确定，连续调用差值才有意义</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">start = time.perf_counter() <span class="comment"># 28911.429803793</span></span><br><span class="line">end = time.perf_counter() <span class="comment"># 28921.430324547</span></span><br><span class="line">end - start <span class="comment"># 10.000520754001627</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>sleep(s) s 拟休眠的时间，单位是秒，可以是浮点数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">wait</span><span class="params">()</span>:</span></span><br><span class="line">    time.sleep(<span class="number">3.3</span>)</span><br><span class="line">wait() <span class="comment"># 程序将等待3.3秒后再退出</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="文本进度条示例"><a href="#文本进度条示例" class="headerlink" title="文本进度条示例"></a>文本进度条示例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line">scale = <span class="number">50</span></span><br><span class="line">print(<span class="string">"执行开始"</span>.center(scale // <span class="number">2</span>, <span class="string">"-"</span>))</span><br><span class="line">start = time.perf_counter()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(scale + <span class="number">1</span>):</span><br><span class="line">    a = <span class="string">'*'</span> * i</span><br><span class="line">    b = <span class="string">'.'</span> * (scale - i)</span><br><span class="line">    c = (i / scale) * <span class="number">100</span></span><br><span class="line">    dur = time.perf_counter() - start</span><br><span class="line">    <span class="comment"># \r 的作用：打印后光标退回到之前的位置</span></span><br><span class="line">    <span class="comment"># end="" 作用：print() 函数默认打印完后换行，加此表示最后不换行</span></span><br><span class="line">    print(<span class="string">"\r[&#123;&#125;&#123;:^3.0f&#125;%&#123;&#125;]&#123;:.2f&#125;s"</span>.format(a, c, b, dur), end=<span class="string">""</span>)</span><br><span class="line">    time.sleep(<span class="number">0.1</span>)</span><br><span class="line">print(<span class="string">"\n"</span> + <span class="string">"执行结束"</span>.center(scale // <span class="number">2</span>, <span class="string">"-"</span>))</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/12/Python-学习笔记（一）/" rel="next" title="Python 学习笔记（一）">
+                <i class="fa fa-chevron-left"></i> Python 学习笔记（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/16/Python-学习笔记（三）/" rel="prev" title="Python 学习笔记（三）">
+                Python 学习笔记（三） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">MK</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-数字类型及操作"><span class="nav-number">1.</span> <span class="nav-text">Python 数字类型及操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#整数类型"><span class="nav-number">1.1.</span> <span class="nav-text">整数类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#浮点数类型"><span class="nav-number">1.2.</span> <span class="nav-text">浮点数类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复数类型"><span class="nav-number">1.3.</span> <span class="nav-text">复数类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数值运算操作符"><span class="nav-number">1.4.</span> <span class="nav-text">数值运算操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数值运算函数"><span class="nav-number">1.5.</span> <span class="nav-text">数值运算函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#工作日的力量示例"><span class="nav-number">1.6.</span> <span class="nav-text">工作日的力量示例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串类型及操作"><span class="nav-number">2.</span> <span class="nav-text">字符串类型及操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串类型"><span class="nav-number">2.1.</span> <span class="nav-text">字符串类型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#字符串切片高级用法"><span class="nav-number">2.1.1.</span> <span class="nav-text">字符串切片高级用法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#字符串的特殊字符"><span class="nav-number">2.1.2.</span> <span class="nav-text">字符串的特殊字符</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串操作符"><span class="nav-number">2.2.</span> <span class="nav-text">字符串操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#处理字符串函数"><span class="nav-number">2.3.</span> <span class="nav-text">处理字符串函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串处理方法"><span class="nav-number">2.4.</span> <span class="nav-text">字符串处理方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串格式化"><span class="nav-number">2.5.</span> <span class="nav-text">字符串格式化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#time-库的使用"><span class="nav-number">3.</span> <span class="nav-text">time 库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#时间获取"><span class="nav-number">3.1.</span> <span class="nav-text">时间获取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#时间格式化"><span class="nav-number">3.2.</span> <span class="nav-text">时间格式化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#格式化控制符"><span class="nav-number">3.2.1.</span> <span class="nav-text">格式化控制符</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#程序计时"><span class="nav-number">3.3.</span> <span class="nav-text">程序计时</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文本进度条示例"><span class="nav-number">4.</span> <span class="nav-text">文本进度条示例</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MK</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

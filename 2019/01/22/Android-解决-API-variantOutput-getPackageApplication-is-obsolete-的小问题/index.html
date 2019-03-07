@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="今天升级了 Android Studio，自然而然也就升级 Gradle（3.2.1 –&amp;gt; 3.3.0），于是乎，出现了一个警告，对于一个强迫症者来说，这能忍？才怪">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 解决 API &#39;variantOutput.getPackageApplication()&#39; is obsolete 的小问题">
+<meta property="og:url" content="http://yoursite.com/2019/01/22/Android-解决-API-variantOutput-getPackageApplication-is-obsolete-的小问题/index.html">
+<meta property="og:site_name" content="对象村">
+<meta property="og:description" content="今天升级了 Android Studio，自然而然也就升级 Gradle（3.2.1 –&amp;gt; 3.3.0），于是乎，出现了一个警告，对于一个强迫症者来说，这能忍？才怪">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fzfcoxk924j32cm08itai.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fzfe1l9jn6j30r605kt8s.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fzfe4fbcw6j30x001m3yh.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fzfe7f1xbij30wc01c3yg.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fzfecql6yoj316601emx6.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fzfeix2uwjj315m01cglm.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fzfexlqgx1j312u01kglm.jpg">
+<meta property="og:updated_time" content="2019-03-07T01:41:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 解决 API &#39;variantOutput.getPackageApplication()&#39; is obsolete 的小问题">
+<meta name="twitter:description" content="今天升级了 Android Studio，自然而然也就升级 Gradle（3.2.1 –&amp;gt; 3.3.0），于是乎，出现了一个警告，对于一个强迫症者来说，这能忍？才怪">
+<meta name="twitter:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fzfcoxk924j32cm08itai.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/01/22/Android-解决-API-variantOutput-getPackageApplication-is-obsolete-的小问题/">
+
+
+
+
+
+  <title>Android 解决 API 'variantOutput.getPackageApplication()' is obsolete 的小问题 | 对象村</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">对象村</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/22/Android-解决-API-variantOutput-getPackageApplication-is-obsolete-的小问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MK">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="对象村">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android 解决 API 'variantOutput.getPackageApplication()' is obsolete 的小问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-22T16:09:27+08:00">
+                2019-01-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>今天升级了 Android Studio，自然而然也就升级 Gradle（3.2.1 –&gt; 3.3.0），于是乎，出现了一个警告，对于一个强迫症者来说，这能忍？才怪<br><a id="more"></a><br>先看看这个红色警告是啥</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fzfcoxk924j32cm08itai.jpg" alt></p>
+<p>嗯，好像是什么东西废弃了，问题的源头倒是很好找，因为下面这段代码</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">applicationVariants.all &#123; variant -&gt;</span><br><span class="line">    variant.outputs.each &#123; output -&gt;</span><br><span class="line">        <span class="keyword">def</span> outputFile = output.outputFile</span><br><span class="line">        <span class="keyword">if</span> (outputFile == <span class="literal">null</span>) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> fileName</span><br><span class="line">        <span class="keyword">if</span> (output.name == <span class="string">'debug'</span>) &#123;</span><br><span class="line">            fileName = <span class="string">"AppName-v$&#123;defaultConfig.versionName&#125;-c$&#123;defaultConfig.versionCode&#125;-test.apk"</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            fileName = <span class="string">"AppName-v$&#123;defaultConfig.versionName&#125;-c$&#123;defaultConfig.versionCode&#125;.apk"</span></span><br><span class="line">        &#125;</span><br><span class="line">        output.outputFileName = fileName</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是写在 build.gradle 中用于自定义生成 apk 名的一段代码，短短几行，却经历过不少辛酸，之前好几次升级也是因为方法废弃被迫修改，看来现在又得改了</p>
+<p>根据提示，是因为 <code>variantOutput.getPackageApplication()</code> 这个方法废弃了，要咱们替换成 <code>variant.getPackageApplicationProvider()</code> 问题是，上面短短的几行代码，哪有用到这个方法，既然明里没有，那肯定是暗地里用了，经过排查这个问题是由 <code>output.outputFile</code> 引起的，说明在调用 <code>getOutputFile()</code> 这个方法时，方法里调用了 <code>getPackageApplication()</code> 这个方法，既然是暗里调用，那只能去看源码了</p>
+<p>这里小插一下</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> outputFile = output.outputFile</span><br><span class="line"><span class="keyword">if</span> (outputFile == <span class="literal">null</span>) <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<p>这段代码此时用处其实并不大，删除即可，但之所以一直留到了现在，是因为之前有用到它来修改 apk 的保存路径，虽然现在只用到了修改 apk 的文件名，路径并没有修改，但万一哪天用到呢，既然现在是这段代码造成的问题，那肯定以后也不能用这段代码来修改保存路径了，so，进入源码了解下</p>
+<p>首先进入 gradle-3.3.0-sources.jar ，那怎么进入呢，如下点击</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fzfe1l9jn6j30r605kt8s.jpg" alt></p>
+<p>便进入源码文件</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fzfe4fbcw6j30x001m3yh.jpg" alt></p>
+<p>经过一番寻找，找到了 <code>getApplicationVariants()</code> 方法所在</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fzfe7f1xbij30wc01c3yg.jpg" alt></p>
+<p>代码是这样的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> DomainObjectSet&lt;ApplicationVariant&gt; <span class="title">getApplicationVariants</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> applicationVariantList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样我们就知道了  <code>applicationVariants.all { variant -&gt;</code> 中的 variant 是 <code>ApplicationVariant</code> ，但是 <code>ApplicationVariant</code> 是一个接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.android.build.gradle.api;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.android.build.gradle.internal.api.TestedVariant;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * A Build variant and all its public data.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ApplicationVariant</span> <span class="keyword">extends</span> <span class="title">ApkVariant</span>, <span class="title">TestedVariant</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>继续寻找具体类，然后找到了 <code>ApplicationVariantImpl</code> ，路径</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fzfecql6yoj316601emx6.jpg" alt></p>
+<p>接着，我们继续寻找 <code>variant.outputs.each { output -&gt;</code> 中的 output 变量所指，在 <code>BaseVariant</code> 中找到</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns the variant outputs. There should always be at least one output.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> a non-null list of variants.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@NonNull</span></span><br><span class="line"><span class="function">DomainObjectCollection&lt;BaseVariantOutput&gt; <span class="title">getOutputs</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<p>output 是 <code>BaseVariantOutput</code> ，会发现 <code>BaseVariantOutput</code> 又是一个接口，面向接口编程的坏处就是，别人看的时候要一层层剥离，才能找到内心，最终发现具体类是 <code>ApkVariantOutputImpl</code> ，路径</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fzfeix2uwjj315m01cglm.jpg" alt></p>
+<p>现在来看 <code>def outputFile = output.outputFile</code> 这段代码暗地里做了啥</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NonNull</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> File <span class="title">getOutputFile</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    PackageAndroidArtifact packageAndroidArtifact = getPackageApplication();</span><br><span class="line">    <span class="keyword">if</span> (packageAndroidArtifact != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> File(</span><br><span class="line">            packageAndroidArtifact.getOutputDirectory(), apkData.getOutputFileName());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.getOutputFile();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>终于找到问题源头了，在 <code>getOutputFile()</code> 方法里头调用了 <code>getPackageApplication()</code> 方法，跟我们一开始分析的一样，但这是 gradle 的源码，我们没法修改，所有只能不要再使用 <code>getOutputFile()</code> 方法了</p>
+<p>那如果要更改输出路径的时候该怎么办呢？不是建议让我们用 <code>getPackageApplicationProvider()</code> 方法么，我们来看看这个方法得到的是啥？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns the packaging task</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;Prefer this to &#123;<span class="doctag">@link</span> #getPackageApplication()&#125; as it triggers eager configuration of the</span></span><br><span class="line"><span class="comment"> * task.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="function">TaskProvider&lt;PackageAndroidArtifact&gt; <span class="title">getPackageApplicationProvider</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<p>一个任务提供者，实际起作用的是 <code>PackageAndroidArtifact</code> ，所有直接看其源码，路径</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fzfexlqgx1j312u01kglm.jpg" alt></p>
+<p>里边东西不少，我们只取所需</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> File outputDirectory;</span><br></pre></td></tr></table></figure>
+<p>就它了，现在我要把 apk 输出到项目根目录下，就可以这样写了</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">applicationVariants.all &#123; variant -&gt;</span><br><span class="line">    variant.outputs.each &#123; output -&gt;</span><br><span class="line">        variant.packageApplicationProvider.get().outputDirectory = <span class="keyword">new</span> File(project.rootDir.absolutePath + <span class="string">"/apk"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> fileName</span><br><span class="line">        <span class="keyword">if</span> (output.name == <span class="string">'debug'</span>) &#123;</span><br><span class="line">            fileName = <span class="string">"AppName-v$&#123;defaultConfig.versionName&#125;-c$&#123;defaultConfig.versionCode&#125;-test.apk"</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            fileName = <span class="string">"AppName-v$&#123;defaultConfig.versionName&#125;-c$&#123;defaultConfig.versionCode&#125;.apk"</span></span><br><span class="line">        &#125;</span><br><span class="line">        output.outputFileName = fileName</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Perfect！烦人的警告也没有了</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/14/JavaScript-函数参数/" rel="next" title="JavaScript 函数参数">
+                <i class="fa fa-chevron-left"></i> JavaScript 函数参数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">MK</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MK</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

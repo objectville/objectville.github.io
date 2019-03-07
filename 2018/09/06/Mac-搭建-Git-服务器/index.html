@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="版本控制想用 git，公司项目不想放到网络上去，在局域网供小组使用就可以，所以选择一台电脑用于搭建 git 服务器，下面开始">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mac 搭建 Git 服务器">
+<meta property="og:url" content="http://yoursite.com/2018/09/06/Mac-搭建-Git-服务器/index.html">
+<meta property="og:site_name" content="对象村">
+<meta property="og:description" content="版本控制想用 git，公司项目不想放到网络上去，在局域网供小组使用就可以，所以选择一台电脑用于搭建 git 服务器，下面开始">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwly1fuysxk4m63j31140r2gn4.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwly1fuytcm98uyj30ba07amx6.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwly1fuyu2xx0o1j31140titad.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNbRwgy1fuzldbi0q0j31140vajsl.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwgy1fuzldlb4yvj31140va757.jpg">
+<meta property="og:updated_time" content="2018-09-11T03:12:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mac 搭建 Git 服务器">
+<meta name="twitter:description" content="版本控制想用 git，公司项目不想放到网络上去，在局域网供小组使用就可以，所以选择一台电脑用于搭建 git 服务器，下面开始">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tNbRwly1fuysxk4m63j31140r2gn4.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/06/Mac-搭建-Git-服务器/">
+
+
+
+
+
+  <title>Mac 搭建 Git 服务器 | 对象村</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">对象村</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/06/Mac-搭建-Git-服务器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MK">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="对象村">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Mac 搭建 Git 服务器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-06T11:31:24+08:00">
+                2018-09-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>版本控制想用 git，公司项目不想放到网络上去，在局域网供小组使用就可以，所以选择一台电脑用于搭建 git 服务器，下面开始<br><a id="more"></a></p>
+<h3 id="新建用户"><a href="#新建用户" class="headerlink" title="新建用户"></a>新建用户</h3><p>为什么要新建用户呢，因为电脑自己在同时使用，如果用自己登录的用户来做 git 服务器的话，别人就可以访问自己电脑里的所有资料了，新建用户的目的为了隔离</p>
+<p>系统偏好设置 -&gt; 用户与群组 -&gt; 添加</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fuysxk4m63j31140r2gn4.jpg" alt></p>
+<p>这里因为我之前已经创建过了，截图只是为了演示</p>
+<h3 id="登录新用户"><a href="#登录新用户" class="headerlink" title="登录新用户"></a>登录新用户</h3><p>点击右上角的小人，可以快速切换登录</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fuytcm98uyj30ba07amx6.jpg" alt></p>
+<h3 id="开启-SSH-访问"><a href="#开启-SSH-访问" class="headerlink" title="开启 SSH 访问"></a>开启 SSH 访问</h3><p>系统偏好设置 -&gt; 共享 -&gt; 打开远程登录</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fuyu2xx0o1j31140titad.jpg" alt></p>
+<p>这个图本来应该截 git 用户的，但是新用户啥都没有，不方便截图。现在就可以喊小伙伴试试可不可以访问了，在终端输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh git@192.168.1.111</span><br></pre></td></tr></table></figure>
+<p>别被我的截图懵住了，这里要告诉小伙伴是你作为 git 服务器的用户，当然还有密码，如果一切正常</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ssh git@192.168.1.111</span><br><span class="line">Last login: Mon Sep  3 08:34:34 2018</span><br><span class="line">git$</span><br></pre></td></tr></table></figure>
+<p>就会告诉你最后登录时间，同时会切换到git用户，别问我为啥我这里没有输密码，因为我已经把 ssh 的公钥设置了，可以无密码登录，这个等下会说</p>
+<h3 id="创建-git-仓库"><a href="#创建-git-仓库" class="headerlink" title="创建 git 仓库"></a>创建 git 仓库</h3><p>切换到了 git 用户后，随便找个地方建个文件夹，用来做 git 远程仓库</p>
+<p>这里我在桌面新建一个文件夹，名字叫 gittest.git，通常仓库名以 .git 结尾</p>
+<p>然后在终端切换到这个文件夹目录下，输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git$ git init --bare</span><br><span class="line">Initialized empty Git repository in /Users/git/Desktop/gittest.git/</span><br></pre></td></tr></table></figure>
+<p>这样，一个空仓库就弄好了，喊小伙伴去 clone 一下试试</p>
+<h3 id="愉快玩耍"><a href="#愉快玩耍" class="headerlink" title="愉快玩耍"></a>愉快玩耍</h3><p>现在已经有了远程仓库了，git 该怎么玩就怎么玩了，现在克隆下(也可以把本地的 git 关联到远程库去)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git clone git@192.168.1.111:Desktop/gittest.git</span><br><span class="line">Cloning into &apos;gittest&apos;...</span><br><span class="line">warning: You appear to have cloned an empty repository.</span><br></pre></td></tr></table></figure>
+<p>其中 <a href="mailto:git@192.168.1.111" target="_blank" rel="noopener">git@192.168.1.111</a>:Desktop/gittest.git 这一串就是远程库地址，@ 符号前面的 git 表示用户名，后面是 git 用户所在的局域网地址，最后就是我们新建的仓库文件夹路径了</p>
+<h3 id="关联-ssh-公钥"><a href="#关联-ssh-公钥" class="headerlink" title="关联 ssh 公钥"></a>关联 ssh 公钥</h3><p>如果没有关联公钥，你每次与远程库打交道的时候都需要输入密码，不嫌麻烦的人下面的可以不用看了</p>
+<p>首先让小伙伴在自己的电脑上生成 ssh 公钥</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<p>默认生成路径 <code>~/.ssh/id_rsa.pub</code></p>
+<p>然后让小伙伴把这个文件的内容 copy 给你，选择用文本文件打开此文件即可</p>
+<p>现在登录 git 用户，在 .ssh 目录下找到 <code>authorized_keys</code> 文件，如果没有就新建一个，然后把 copy 给你的 公钥复制到此文件中，如果有多个公钥，就一行一个，保存。</p>
+<p>ok，可以无密码畅快操作了。</p>
+<h3 id="固定-ip"><a href="#固定-ip" class="headerlink" title="固定 ip"></a>固定 ip</h3><p>如果你是用的自己开发的电脑，一般开机之后都会重新获取局域网的 ip，如果你的 ip 变了，小伙伴就又得改远程地址了，所以这里说下怎么固定 ip</p>
+<p>系统偏好设置 -&gt; 网络 -&gt; 高级 -&gt; TCP/IP</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwgy1fuzldbi0q0j31140vajsl.jpg" alt></p>
+<p>DNS 必须设置，我这里是 192.168.1.1，根据自己局域网的 DNS 设置</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwgy1fuzldlb4yvj31140va757.jpg" alt></p>
+<p>谨以此记录</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/28/Dagger2-在-Kotlin-中使用/" rel="next" title="Dagger2 在 Kotlin 中使用">
+                <i class="fa fa-chevron-left"></i> Dagger2 在 Kotlin 中使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/11/Android-FlexboxLayout-的使用/" rel="prev" title="Android FlexboxLayout 的使用">
+                Android FlexboxLayout 的使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">MK</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建用户"><span class="nav-number">1.</span> <span class="nav-text">新建用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#登录新用户"><span class="nav-number">2.</span> <span class="nav-text">登录新用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启-SSH-访问"><span class="nav-number">3.</span> <span class="nav-text">开启 SSH 访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建-git-仓库"><span class="nav-number">4.</span> <span class="nav-text">创建 git 仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#愉快玩耍"><span class="nav-number">5.</span> <span class="nav-text">愉快玩耍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关联-ssh-公钥"><span class="nav-number">6.</span> <span class="nav-text">关联 ssh 公钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#固定-ip"><span class="nav-number">7.</span> <span class="nav-text">固定 ip</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MK</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

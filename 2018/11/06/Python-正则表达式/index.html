@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="正则表达式regular expression，用来简洁表达一组字符串的表达式 在 Python 中，通过引入 Re 库，来进行正则表达式的操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 正则表达式">
+<meta property="og:url" content="http://yoursite.com/2018/11/06/Python-正则表达式/index.html">
+<meta property="og:site_name" content="对象村">
+<meta property="og:description" content="正则表达式regular expression，用来简洁表达一组字符串的表达式 在 Python 中，通过引入 Re 库，来进行正则表达式的操作">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-07T01:41:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python 正则表达式">
+<meta name="twitter:description" content="正则表达式regular expression，用来简洁表达一组字符串的表达式 在 Python 中，通过引入 Re 库，来进行正则表达式的操作">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/06/Python-正则表达式/">
+
+
+
+
+
+  <title>Python 正则表达式 | 对象村</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">对象村</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/06/Python-正则表达式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MK">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="对象村">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python 正则表达式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-06T10:06:28+08:00">
+                2018-11-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h3><p>regular expression，用来简洁表达一组字符串的表达式</p>
+<p>在 Python 中，通过引入 Re 库，来进行正则表达式的操作<br><a id="more"></a></p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>正则表达式语法由字符和操作符构成</p>
+<h4 id="常用操作符"><a href="#常用操作符" class="headerlink" title="常用操作符"></a>常用操作符</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">操作符</th>
+<th style="text-align:center">说明</th>
+<th style="text-align:center">实例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">.</td>
+<td style="text-align:center">表示任何单个字符</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">[ ]</td>
+<td style="text-align:center">字符集，对单个字符给出取值范围</td>
+<td style="text-align:center">[abc] 表示a、b、c，[a‐z] 表示 a 到 z 单个字符</td>
+</tr>
+<tr>
+<td style="text-align:center">[^ ]</td>
+<td style="text-align:center">非字符集，对单个字符给出排除范围</td>
+<td style="text-align:center">[^abc] 表示非 a 或 b 或 c 的单个字符</td>
+</tr>
+<tr>
+<td style="text-align:center">*</td>
+<td style="text-align:center">前一个字符 0 次或无限次扩展</td>
+<td style="text-align:center">abc* 表示 ab、abc、abcc、abccc 等</td>
+</tr>
+<tr>
+<td style="text-align:center">+</td>
+<td style="text-align:center">前一个字符 1 次或无限次扩展</td>
+<td style="text-align:center">abc+ 表示 abc、abcc、abccc 等</td>
+</tr>
+<tr>
+<td style="text-align:center">?</td>
+<td style="text-align:center">前一个字符 0 次或 1 次扩展</td>
+<td style="text-align:center">abc? 表示 ab、abc</td>
+</tr>
+<tr>
+<td style="text-align:center">\</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">左右表达式任意一个</td>
+<td>abc\</td>
+<td>def 表示 abc、def</td>
+</tr>
+<tr>
+<td style="text-align:center">{m}</td>
+<td style="text-align:center">扩展前一个字符 m 次</td>
+<td style="text-align:center">ab{2}c 表示 abbc</td>
+</tr>
+<tr>
+<td style="text-align:center">{m,n}</td>
+<td style="text-align:center">扩展前一个字符 m 至 n 次（ 含 n ）</td>
+<td style="text-align:center">ab{1,2}c 表示 abc、abbc</td>
+</tr>
+<tr>
+<td style="text-align:center">^</td>
+<td style="text-align:center">匹配字符串开头</td>
+<td style="text-align:center">^abc 表示 abc 且在一个字符串的开头</td>
+</tr>
+<tr>
+<td style="text-align:center">$</td>
+<td style="text-align:center">匹配字符串结尾</td>
+<td style="text-align:center">abc$ 表示 abc 且在一个字符串的结尾</td>
+</tr>
+<tr>
+<td style="text-align:center">( )</td>
+<td style="text-align:center">分组标记，内部只能使用 \</td>
+<td style="text-align:center">操作符</td>
+<td>(abc) 表示 abc，(abc\</td>
+<td>def) 表示 abc、def</td>
+</tr>
+<tr>
+<td style="text-align:center">\d</td>
+<td style="text-align:center">数字，等价于 [0‐9]</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">\w</td>
+<td style="text-align:center">单词字符，等价于 [A‐Za‐z0‐9_]</td>
+</tr>
+</tbody>
+</table>
+<p>示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">正则表达式                    对应字符串</span><br><span class="line">P(Y|YT|YTH|YTHO)?N          'PN'、'PYN'、'PYTN'、'PYTHN'、'PYTHON'</span><br><span class="line">PYTHON+                     <span class="string">'PYTHON'</span>、<span class="string">'PYTHONN'</span>、<span class="string">'PYTHONNN'</span> …</span><br><span class="line">PY[TH]ON                    <span class="string">'PYTON'</span>、<span class="string">'PYHON'</span></span><br><span class="line">PY[^TH]?ON                  'PYON'、'PYaON'、'PYbON'、'PYcON'…</span><br><span class="line">PY&#123;:<span class="number">3</span>&#125;N                     <span class="string">'PN'</span>、<span class="string">'PYN'</span>、<span class="string">'PYYN'</span>、<span class="string">'PYYYN'</span></span><br></pre></td></tr></table></figure>
+<p>经典正则表达式示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">^[A‐Za‐z]+$                 由 <span class="number">26</span> 个字母组成的字符串</span><br><span class="line">^[A‐Za‐z0‐<span class="number">9</span>]+$              由 <span class="number">26</span> 个字母和数字组成的字符串</span><br><span class="line">^‐?\d+$                     整数形式的字符串</span><br><span class="line">^[<span class="number">0</span>‐<span class="number">9</span>]*[<span class="number">1</span>‐<span class="number">9</span>][<span class="number">0</span>‐<span class="number">9</span>]*$         正整数形式的字符串</span><br><span class="line">[<span class="number">1</span>‐<span class="number">9</span>]\d&#123;<span class="number">5</span>&#125;                  中国境内邮政编码，<span class="number">6</span> 位</span><br><span class="line">[\u4e00‐\u9fa5]             匹配中文字符</span><br><span class="line">\d&#123;<span class="number">3</span>&#125;‐\d&#123;<span class="number">8</span>&#125;|\d&#123;<span class="number">4</span>&#125;‐\d&#123;<span class="number">7</span>&#125;     国内电话号码，<span class="number">010</span>‐<span class="number">68913536</span></span><br></pre></td></tr></table></figure>
+<p>IP 地址的正则表达式</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">IP 地址字符串形式的正则表达式（IP 地址分 <span class="number">4</span> 段，每段 <span class="number">0</span>‐<span class="number">255</span>）</span><br><span class="line">    \d+.\d+.\d+.\d+ 或 \d&#123;<span class="number">1</span>,<span class="number">3</span>&#125;.\d&#123;<span class="number">1</span>,<span class="number">3</span>&#125;.\d&#123;<span class="number">1</span>,<span class="number">3</span>&#125;.\d&#123;<span class="number">1</span>,<span class="number">3</span>&#125;</span><br><span class="line"></span><br><span class="line">精确写法</span><br><span class="line">    0‐99： [1‐9]?\d</span><br><span class="line">    <span class="number">100</span>‐<span class="number">199</span>: <span class="number">1</span>\d&#123;<span class="number">2</span>&#125;</span><br><span class="line">    <span class="number">200</span>‐<span class="number">249</span>: <span class="number">2</span>[<span class="number">0</span>‐<span class="number">4</span>]\d</span><br><span class="line">    <span class="number">250</span>‐<span class="number">255</span>: <span class="number">25</span>[<span class="number">0</span>‐<span class="number">5</span>]</span><br><span class="line"></span><br><span class="line">(([1‐9]?\d|1\d&#123;2&#125;|2[0‐4]\d|25[0‐5]).)&#123;3&#125;([1‐9]?\d|1\d&#123;2&#125;|2[0‐4]\d|25[0‐5])</span><br></pre></td></tr></table></figure>
+<h3 id="Re-库的基本使用"><a href="#Re-库的基本使用" class="headerlink" title="Re 库的基本使用"></a>Re 库的基本使用</h3><h4 id="raw-string-类型（原生字符串类型）"><a href="#raw-string-类型（原生字符串类型）" class="headerlink" title="raw string 类型（原生字符串类型）"></a>raw string 类型（原生字符串类型）</h4><p>re 库采用 raw string 类型表示正则表达式，表示为：</p>
+<blockquote>
+<p>r’text’</p>
+</blockquote>
+<p>例如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">r'[1‐9]\d&#123;5&#125;'</span></span><br><span class="line"><span class="string">r'\d&#123;3&#125;‐\d&#123;8&#125;|\d&#123;4&#125;‐\d&#123;7&#125;'</span></span><br></pre></td></tr></table></figure>
+<p>raw string 是不包含对转义符再次转义的字符串</p>
+<p>re 库也可以采用 string 类型表示正则表达式</p>
+<p>例如</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'[1‐9]\\d&#123;5&#125;'</span></span><br><span class="line"><span class="string">'\\d&#123;3&#125;‐\\d&#123;8&#125;|\\d&#123;4&#125;‐\\d&#123;7&#125;'</span></span><br></pre></td></tr></table></figure>
+<p>建议：当正则表达式包含转义符时，使用 raw string</p>
+<h4 id="Re-库主要功能函数"><a href="#Re-库主要功能函数" class="headerlink" title="Re 库主要功能函数"></a>Re 库主要功能函数</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">函数</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">re.search()</td>
+<td style="text-align:center">在一个字符串中搜索匹配正则表达式的第一个位置，返回 match 对象</td>
+</tr>
+<tr>
+<td style="text-align:center">re.match()</td>
+<td style="text-align:center">从一个字符串的开始位置起匹配正则表达式，返回 match 对象</td>
+</tr>
+<tr>
+<td style="text-align:center">re.findall()</td>
+<td style="text-align:center">搜索字符串，以列表类型返回全部能匹配的子串</td>
+</tr>
+<tr>
+<td style="text-align:center">re.split()</td>
+<td style="text-align:center">将一个字符串按照正则表达式匹配结果进行分割，返回列表类型</td>
+</tr>
+<tr>
+<td style="text-align:center">re.finditer()</td>
+<td style="text-align:center">搜索字符串，返回一个匹配结果的迭代类型，每个迭代元素是 match 对象</td>
+</tr>
+<tr>
+<td style="text-align:center">re.sub()</td>
+<td style="text-align:center">在一个字符串中替换所有匹配正则表达式的子串，返回替换后的字符串</td>
+</tr>
+</tbody>
+</table>
+<h5 id="re-search-pattern-string-flags-0"><a href="#re-search-pattern-string-flags-0" class="headerlink" title="re.search(pattern, string, flags=0)"></a>re.search(pattern, string, flags=0)</h5><p>在一个字符串中搜索匹配正则表达式的第一个位置，返回 match 对象</p>
+<ul>
+<li><p>pattern : 正则表达式的字符串或原生字符串表示</p>
+</li>
+<li><p>string : 待匹配字符串</p>
+</li>
+<li><p>flags : 正则表达式使用时的控制标记</p>
+<p>|       常用标记        |                             说明                             |<br>| :——————-: | :———————————————————-: |<br>| re.I    re.IGNORECASE |        忽略正则表达式的大小写，[A‐Z] 能够匹配小写字符        |<br>| re.M    re.MULTILINE  |  正则表达式中的 ^ 操作符能够将给定字符串的每行当作匹配开始   |<br>|   re.S    re.DOTALL   | . 操作符能够匹配所有字符(包括换行符)，默认只匹配除换行外的所有字符 |</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">match = re.search(<span class="string">r'[1-9]\d&#123;5&#125;'</span>, <span class="string">"BIT 100081"</span>)</span><br><span class="line"><span class="keyword">if</span> match:</span><br><span class="line">    print(match.group(<span class="number">0</span>)) <span class="comment"># 100081</span></span><br></pre></td></tr></table></figure>
+<h5 id="re-match-pattern-string-flags-0"><a href="#re-match-pattern-string-flags-0" class="headerlink" title="re.match(pattern, string, flags=0)"></a>re.match(pattern, string, flags=0)</h5><p>从一个字符串的开始位置起匹配正则表达式，返回 match 对象。参数同 search()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">match = re.match(<span class="string">r'[1-9]\d&#123;5&#125;'</span>, <span class="string">"BIT 100081"</span>)</span><br><span class="line">print(type(match)) <span class="comment"># &lt;class 'NoneType'&gt;</span></span><br><span class="line"><span class="keyword">if</span> match: <span class="comment"># 没有匹配到数据，下面的代码不会执行</span></span><br><span class="line">    print(match.group(<span class="number">0</span>))</span><br></pre></td></tr></table></figure>
+<h5 id="re-findall-pattern-string-flags-0"><a href="#re-findall-pattern-string-flags-0" class="headerlink" title="re.findall(pattern, string, flags=0)"></a>re.findall(pattern, string, flags=0)</h5><p>搜索字符串，以列表类型返回全部能匹配的子串。参数同 search()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls = re.findall(<span class="string">r'[1-9]\d&#123;5&#125;'</span>, <span class="string">"BIT100081 TSU100083"</span>)</span><br><span class="line">print(ls) <span class="comment"># ['100081', '100083']</span></span><br></pre></td></tr></table></figure>
+<h5 id="re-split-pattern-string-maxsplit-0-flags-0"><a href="#re-split-pattern-string-maxsplit-0-flags-0" class="headerlink" title="re.split(pattern, string, maxsplit=0, flags=0)"></a>re.split(pattern, string, maxsplit=0, flags=0)</h5><p>将一个字符串按照正则表达式匹配结果进行分割，返回列表类型。参数同 search()</p>
+<ul>
+<li>maxsplit: 最大分割数，剩余部分作为最后一个元素输出</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">ls = re.split(<span class="string">r'[1-9]\d&#123;5&#125;'</span>, <span class="string">"BIT100081 TSU100083"</span>)</span><br><span class="line">print(ls)  <span class="comment"># ['BIT', ' TSU', '']</span></span><br><span class="line">ls = re.split(<span class="string">r'[1-9]\d&#123;5&#125;'</span>, <span class="string">"BIT100081 TSU100083"</span>, maxsplit=<span class="number">1</span>)</span><br><span class="line">print(ls)  <span class="comment"># ['BIT', ' TSU100083']</span></span><br></pre></td></tr></table></figure>
+<h5 id="re-finditer-pattern-string-flags-0"><a href="#re-finditer-pattern-string-flags-0" class="headerlink" title="re.finditer(pattern, string, flags=0)"></a>re.finditer(pattern, string, flags=0)</h5><p>搜索字符串，返回一个匹配结果的迭代类型，每个迭代元素是 match 对象。参数同 search()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">it = re.finditer(<span class="string">r'[1-9]\d&#123;5&#125;'</span>, <span class="string">"BIT100081 TSU100083"</span>)</span><br><span class="line"><span class="keyword">for</span> m <span class="keyword">in</span> it:</span><br><span class="line">    print(m.group(<span class="number">0</span>))</span><br><span class="line">    <span class="comment"># 100081</span></span><br><span class="line">    <span class="comment"># 100083</span></span><br></pre></td></tr></table></figure>
+<h5 id="re-sub-pattern-repl-string-count-0-flags-0"><a href="#re-sub-pattern-repl-string-count-0-flags-0" class="headerlink" title="re.sub(pattern, repl, string, count=0, flags=0)"></a>re.sub(pattern, repl, string, count=0, flags=0)</h5><p>在一个字符串中替换所有匹配正则表达式的子串，返回替换后的字符串。参数同 search()</p>
+<ul>
+<li>repl : 替换匹配字符串的字符串</li>
+<li>count : 匹配的最大替换次数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">s = re.sub(<span class="string">r'[1-9]\d&#123;5&#125;'</span>, <span class="string">':zipcode'</span>, <span class="string">'BIT100081 TSU100083'</span>)</span><br><span class="line">print(s)  <span class="comment"># BIT:zipcode TSU:zipcode</span></span><br><span class="line">s = re.sub(<span class="string">r'[1-9]\d&#123;5&#125;'</span>, <span class="string">':zipcode'</span>, <span class="string">'BIT100081 TSU100083'</span>, count=<span class="number">1</span>)</span><br><span class="line">print(s)  <span class="comment"># BIT:zipcode TSU100083</span></span><br></pre></td></tr></table></figure>
+<h4 id="Re-库的另一种等价用法"><a href="#Re-库的另一种等价用法" class="headerlink" title="Re 库的另一种等价用法"></a>Re 库的另一种等价用法</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">rst = re.search(<span class="string">r'[1‐9]\d&#123;5&#125;'</span>, <span class="string">'BIT 100081'</span>)</span><br><span class="line"><span class="comment"># 等价于</span></span><br><span class="line">pat = re.compile(<span class="string">r'[1‐9]\d&#123;5&#125;'</span>)</span><br><span class="line">rst = pat.search(<span class="string">'BIT 100081'</span>)</span><br></pre></td></tr></table></figure>
+<h5 id="regex-re-compile-pattern-flags-0"><a href="#regex-re-compile-pattern-flags-0" class="headerlink" title="regex = re.compile(pattern, flags=0)"></a>regex = re.compile(pattern, flags=0)</h5><p>将正则表达式的字符串形式编译成正则表达式对象</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">函数</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">regex.search()</td>
+<td style="text-align:center">在一个字符串中搜索匹配正则表达式的第一个位置，返回 match 对象</td>
+</tr>
+<tr>
+<td style="text-align:center">regex.match()</td>
+<td style="text-align:center">从一个字符串的开始位置起匹配正则表达式，返回 match 对象</td>
+</tr>
+<tr>
+<td style="text-align:center">regex.findall()</td>
+<td style="text-align:center">搜索字符串，以列表类型返回全部能匹配的子串</td>
+</tr>
+<tr>
+<td style="text-align:center">regex.split()</td>
+<td style="text-align:center">将一个字符串按照正则表达式匹配结果进行分割，返回列表类型</td>
+</tr>
+<tr>
+<td style="text-align:center">regex.finditer()</td>
+<td style="text-align:center">搜索字符串，返回一个匹配结果的迭代类型，每个迭代元素是 match 对象</td>
+</tr>
+<tr>
+<td style="text-align:center">regex.sub()</td>
+<td style="text-align:center">在一个字符串中替换所有匹配正则表达式的子串，返回替换后的字符串</td>
+</tr>
+</tbody>
+</table>
+<h4 id="Re-库的-Match-对象"><a href="#Re-库的-Match-对象" class="headerlink" title="Re 库的 Match 对象"></a>Re 库的 Match 对象</h4><p>Match 对象是一次匹配的结果，包含匹配的很多信息</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">match = re.search(<span class="string">r'[1-9]\d&#123;5&#125;'</span>, <span class="string">"BIT 100081"</span>)</span><br><span class="line"><span class="keyword">if</span> match:</span><br><span class="line">    print(match.group(<span class="number">0</span>))  <span class="comment"># 100081</span></span><br><span class="line">print(type(match)) <span class="comment"># &lt;class '_sre.SRE_Match'&gt;</span></span><br></pre></td></tr></table></figure>
+<h5 id="Match-对象的属性"><a href="#Match-对象的属性" class="headerlink" title="Match 对象的属性"></a>Match 对象的属性</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">属性</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">.string</td>
+<td style="text-align:center">待匹配的文本</td>
+</tr>
+<tr>
+<td style="text-align:center">.re</td>
+<td style="text-align:center">匹配时使用的 patter 对象（正则表达式）</td>
+</tr>
+<tr>
+<td style="text-align:center">.pos</td>
+<td style="text-align:center">正则表达式搜索文本的开始位置</td>
+</tr>
+<tr>
+<td style="text-align:center">.endpos</td>
+<td style="text-align:center">正则表达式搜索文本的结束位置</td>
+</tr>
+</tbody>
+</table>
+<h5 id="Match-对象的方法"><a href="#Match-对象的方法" class="headerlink" title="Match 对象的方法"></a>Match 对象的方法</h5><table>
+<thead>
+<tr>
+<th style="text-align:center">方法</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">.group(0)</td>
+<td style="text-align:center">获得匹配后的字符串</td>
+</tr>
+<tr>
+<td style="text-align:center">.start()</td>
+<td style="text-align:center">匹配字符串在原始字符串的开始位置</td>
+</tr>
+<tr>
+<td style="text-align:center">.end()</td>
+<td style="text-align:center">匹配字符串在原始字符串的结束位置</td>
+</tr>
+<tr>
+<td style="text-align:center">.span()</td>
+<td style="text-align:center">返回 (.start(), .end())</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">m = re.search(<span class="string">r'[1-9]\d&#123;5&#125;'</span>, <span class="string">'BIT100081 TSU100083'</span>)</span><br><span class="line">print(m.string)  <span class="comment"># BIT100081 TSU100083</span></span><br><span class="line">print(m.re)  <span class="comment"># re.compile('[1-9]\\d&#123;5&#125;')</span></span><br><span class="line">print(m.pos)  <span class="comment"># 0</span></span><br><span class="line">print(m.endpos)  <span class="comment"># 19</span></span><br><span class="line">print(m.group(<span class="number">0</span>))  <span class="comment"># 100081</span></span><br><span class="line">print(m.start())  <span class="comment"># 3</span></span><br><span class="line">print(m.end())  <span class="comment"># 9</span></span><br><span class="line">print(m.span())  <span class="comment"># (3, 9)</span></span><br></pre></td></tr></table></figure>
+<h4 id="Re-库的贪婪匹配和最小匹配"><a href="#Re-库的贪婪匹配和最小匹配" class="headerlink" title="Re 库的贪婪匹配和最小匹配"></a>Re 库的贪婪匹配和最小匹配</h4><p>默认贪婪匹配，即输出匹配最长的子串</p>
+<h5 id="贪婪匹配"><a href="#贪婪匹配" class="headerlink" title="贪婪匹配"></a>贪婪匹配</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">match = re.search(<span class="string">r'PY.*N'</span>, <span class="string">'PYANBNCNDN'</span>)</span><br><span class="line">print(match.group(<span class="number">0</span>)) <span class="comment"># PYANBNCNDN</span></span><br></pre></td></tr></table></figure>
+<h5 id="最小匹配"><a href="#最小匹配" class="headerlink" title="最小匹配"></a>最小匹配</h5><p>只要长度输出可能不同的，都可以通过在操作符后增加 ? 变成最小匹配</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">操作符</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">*?</td>
+<td style="text-align:center">前一个字符 0 次或无限次扩展，最小匹配</td>
+</tr>
+<tr>
+<td style="text-align:center">+?</td>
+<td style="text-align:center">前一个字符 1 次或无限次扩展，最小匹配</td>
+</tr>
+<tr>
+<td style="text-align:center">??</td>
+<td style="text-align:center">前一个字符 0 次或 1 次扩展，最小匹配</td>
+</tr>
+<tr>
+<td style="text-align:center">{m,n}?</td>
+<td style="text-align:center">扩展前一个字符 m 至 n 次（ 含 n ），最小匹配</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">match = re.search(<span class="string">r'PY.*?N'</span>, <span class="string">'PYANBNCNDN'</span>)</span><br><span class="line">print(match.group(<span class="number">0</span>)) <span class="comment"># PYAN</span></span><br></pre></td></tr></table></figure>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><h4 id="淘宝商品比价定向爬虫示例"><a href="#淘宝商品比价定向爬虫示例" class="headerlink" title="淘宝商品比价定向爬虫示例"></a>淘宝商品比价定向爬虫示例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getHTMLText</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        r = requests.get(url, timeout=<span class="number">30</span>)</span><br><span class="line">        r.raise_for_status()</span><br><span class="line">        r.encoding = r.apparent_encoding</span><br><span class="line">        <span class="keyword">return</span> r.text</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">""</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parsePage</span><span class="params">(infoList, html)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        plt = re.findall(<span class="string">r'\"view_price\"\:\"[\d\.]*\"'</span>, html)</span><br><span class="line">        tlt = re.findall(<span class="string">r'\"raw_title\"\:\".*?\"'</span>, html)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(plt)):</span><br><span class="line">            price = eval(plt[i].split(<span class="string">':'</span>)[<span class="number">1</span>])</span><br><span class="line">            title = eval(tlt[i].split(<span class="string">':'</span>)[<span class="number">1</span>])</span><br><span class="line">            infoList.append([price, title])</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        print()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printGoodsList</span><span class="params">(infoList)</span>:</span></span><br><span class="line">    template = <span class="string">"&#123;:4&#125;\t&#123;:8&#125;\t&#123;:16&#125;"</span></span><br><span class="line">    print(template.format(<span class="string">"序号"</span>, <span class="string">"价格"</span>, <span class="string">"商品名称"</span>))</span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> g <span class="keyword">in</span> infoList:</span><br><span class="line">        count += <span class="number">1</span></span><br><span class="line">        print(template.format(count, g[<span class="number">0</span>], g[<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    goods = <span class="string">"书包"</span></span><br><span class="line"></span><br><span class="line">    start_url = <span class="string">"https://s.taobao.com/search?q="</span> + goods</span><br><span class="line">    infoList = []</span><br><span class="line"></span><br><span class="line">    html = getHTMLText(start_url)</span><br><span class="line">    parsePage(infoList, html)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 由于添加 s 参数淘宝做了登录验证，下面的代码先放着</span></span><br><span class="line">    <span class="comment"># depth = 2</span></span><br><span class="line">    <span class="comment"># for i in range(depth):</span></span><br><span class="line">    <span class="comment">#     try:</span></span><br><span class="line">    <span class="comment">#         url = start_url + "&amp;s=" + str(44 * i)</span></span><br><span class="line">    <span class="comment">#         html = getHTMLText(url)</span></span><br><span class="line">    <span class="comment">#         parsePage(infoList, html)</span></span><br><span class="line">    <span class="comment">#     except Exception as e:</span></span><br><span class="line">    <span class="comment">#         continue</span></span><br><span class="line">    printGoodsList(infoList)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+<h4 id="股票数据定向爬虫示例"><a href="#股票数据定向爬虫示例" class="headerlink" title="股票数据定向爬虫示例"></a>股票数据定向爬虫示例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> traceback</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getHTMLText</span><span class="params">(url, code=<span class="string">'utf-8'</span>)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        r = requests.get(url, timeout=<span class="number">30</span>)</span><br><span class="line">        r.raise_for_status()</span><br><span class="line">        r.encoding = code</span><br><span class="line">        <span class="keyword">return</span> r.text</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">""</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getStockList</span><span class="params">(sList, sUrl)</span>:</span></span><br><span class="line">    html = getHTMLText(sUrl, <span class="string">'GB2313'</span>)</span><br><span class="line">    soup = BeautifulSoup(html, <span class="string">'html.parser'</span>)</span><br><span class="line">    aList = soup.find_all(<span class="string">'a'</span>)</span><br><span class="line">    <span class="keyword">for</span> a <span class="keyword">in</span> aList:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            href = a.attrs[<span class="string">'href'</span>]</span><br><span class="line">            sList.append(re.findall(<span class="string">r's[hz]\d&#123;6&#125;'</span>, href)[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getStockInfo</span><span class="params">(sList, sUrl, fPath)</span>:</span></span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> stock <span class="keyword">in</span> sList:</span><br><span class="line">        url = sUrl + stock + <span class="string">".html"</span></span><br><span class="line">        html = getHTMLText(url)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">if</span> html == <span class="string">""</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            infoDict = &#123;&#125;</span><br><span class="line">            soup = BeautifulSoup(html, <span class="string">'html.parser'</span>)</span><br><span class="line">            stockInfo = soup.find(<span class="string">'div'</span>, attrs=&#123;<span class="string">'class'</span>: <span class="string">'stock-bets'</span>&#125;)</span><br><span class="line"></span><br><span class="line">            name = stockInfo.find_all(attrs=&#123;<span class="string">'class'</span>: <span class="string">'bets-name'</span>&#125;)[<span class="number">0</span>]</span><br><span class="line">            infoDict.update(&#123;<span class="string">'股票名称'</span>: name.text.split()[<span class="number">0</span>]&#125;)</span><br><span class="line"></span><br><span class="line">            keyList = stockInfo.find_all(<span class="string">'dt'</span>)</span><br><span class="line">            valueList = stockInfo.find_all(<span class="string">'dd'</span>)</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(len(keyList)):</span><br><span class="line">                key = keyList[i].text</span><br><span class="line">                value = valueList[i].text</span><br><span class="line">                infoDict[key] = value</span><br><span class="line"></span><br><span class="line">            <span class="keyword">with</span> open(fPath, <span class="string">'a'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f:</span><br><span class="line">                f.write(str(infoDict) + <span class="string">"\n"</span>)</span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line">                print(<span class="string">'\r当前进度：&#123;:.2f&#125;%'</span>.format(count * <span class="number">100</span> / len(sList)), end=<span class="string">""</span>)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            traceback.print_exc()</span><br><span class="line">            count += <span class="number">1</span></span><br><span class="line">            print(<span class="string">'\r当前进度：&#123;:.2f&#125;%'</span>.format(count * <span class="number">100</span> / len(sList)), end=<span class="string">""</span>)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    stock_list_url = <span class="string">"http://quote.eastmoney.com/stocklist.html"</span></span><br><span class="line">    stock_info_url = <span class="string">"https://gupiao.baidu.com/stock/"</span></span><br><span class="line">    output_file = <span class="string">"BaiduStockInfo.txt"</span></span><br><span class="line">    sList = []</span><br><span class="line">    getStockList(sList, stock_list_url)</span><br><span class="line">    getStockInfo(sList, stock_info_url, output_file)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/26/Python-Beautiful-Soup-库/" rel="next" title="Python Beautiful Soup 库">
+                <i class="fa fa-chevron-left"></i> Python Beautiful Soup 库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/10/Python-学习笔记（五）/" rel="prev" title="Python 学习笔记（五）">
+                Python 学习笔记（五） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">MK</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#正则表达式"><span class="nav-number">1.</span> <span class="nav-text">正则表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-number">2.</span> <span class="nav-text">语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用操作符"><span class="nav-number">2.1.</span> <span class="nav-text">常用操作符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Re-库的基本使用"><span class="nav-number">3.</span> <span class="nav-text">Re 库的基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#raw-string-类型（原生字符串类型）"><span class="nav-number">3.1.</span> <span class="nav-text">raw string 类型（原生字符串类型）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Re-库主要功能函数"><span class="nav-number">3.2.</span> <span class="nav-text">Re 库主要功能函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#re-search-pattern-string-flags-0"><span class="nav-number">3.2.1.</span> <span class="nav-text">re.search(pattern, string, flags=0)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#re-match-pattern-string-flags-0"><span class="nav-number">3.2.2.</span> <span class="nav-text">re.match(pattern, string, flags=0)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#re-findall-pattern-string-flags-0"><span class="nav-number">3.2.3.</span> <span class="nav-text">re.findall(pattern, string, flags=0)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#re-split-pattern-string-maxsplit-0-flags-0"><span class="nav-number">3.2.4.</span> <span class="nav-text">re.split(pattern, string, maxsplit=0, flags=0)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#re-finditer-pattern-string-flags-0"><span class="nav-number">3.2.5.</span> <span class="nav-text">re.finditer(pattern, string, flags=0)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#re-sub-pattern-repl-string-count-0-flags-0"><span class="nav-number">3.2.6.</span> <span class="nav-text">re.sub(pattern, repl, string, count=0, flags=0)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Re-库的另一种等价用法"><span class="nav-number">3.3.</span> <span class="nav-text">Re 库的另一种等价用法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#regex-re-compile-pattern-flags-0"><span class="nav-number">3.3.1.</span> <span class="nav-text">regex = re.compile(pattern, flags=0)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Re-库的-Match-对象"><span class="nav-number">3.4.</span> <span class="nav-text">Re 库的 Match 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Match-对象的属性"><span class="nav-number">3.4.1.</span> <span class="nav-text">Match 对象的属性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Match-对象的方法"><span class="nav-number">3.4.2.</span> <span class="nav-text">Match 对象的方法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Re-库的贪婪匹配和最小匹配"><span class="nav-number">3.5.</span> <span class="nav-text">Re 库的贪婪匹配和最小匹配</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#贪婪匹配"><span class="nav-number">3.5.1.</span> <span class="nav-text">贪婪匹配</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#最小匹配"><span class="nav-number">3.5.2.</span> <span class="nav-text">最小匹配</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例"><span class="nav-number">4.</span> <span class="nav-text">实例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#淘宝商品比价定向爬虫示例"><span class="nav-number">4.1.</span> <span class="nav-text">淘宝商品比价定向爬虫示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#股票数据定向爬虫示例"><span class="nav-number">4.2.</span> <span class="nav-text">股票数据定向爬虫示例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MK</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

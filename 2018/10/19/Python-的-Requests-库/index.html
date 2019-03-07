@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Requests 库是基于 urllib 写的一个 HTTP 网络请求库，对于日常的网络请求都能满足需求，而且简单好用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 的 Requests 库">
+<meta property="og:url" content="http://yoursite.com/2018/10/19/Python-的-Requests-库/index.html">
+<meta property="og:site_name" content="对象村">
+<meta property="og:description" content="Requests 库是基于 urllib 写的一个 HTTP 网络请求库，对于日常的网络请求都能满足需求，而且简单好用">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-07T01:41:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python 的 Requests 库">
+<meta name="twitter:description" content="Requests 库是基于 urllib 写的一个 HTTP 网络请求库，对于日常的网络请求都能满足需求，而且简单好用">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/19/Python-的-Requests-库/">
+
+
+
+
+
+  <title>Python 的 Requests 库 | 对象村</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">对象村</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/19/Python-的-Requests-库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MK">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="对象村">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python 的 Requests 库</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-19T11:56:36+08:00">
+                2018-10-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Requests 库是基于 urllib 写的一个 HTTP 网络请求库，对于日常的网络请求都能满足需求，而且简单好用<br><a id="more"></a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>官网：<a href="http://docs.python-requests.org/en/master/" target="_blank" rel="noopener">http://docs.python-requests.org/en/master/</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install requests</span><br></pre></td></tr></table></figure>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><h4 id="7-个主要方法"><a href="#7-个主要方法" class="headerlink" title="7 个主要方法"></a>7 个主要方法</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">方法</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">requests.request()</td>
+<td style="text-align:center">构造一个请求，支撑以下各方法的基础方法</td>
+</tr>
+<tr>
+<td style="text-align:center">requests.get()</td>
+<td style="text-align:center">获取网页的数据，对应 HTTP 的 GET</td>
+</tr>
+<tr>
+<td style="text-align:center">requests.head()</td>
+<td style="text-align:center">获取网页头信息，对应 HTTP 的 HEAD</td>
+</tr>
+<tr>
+<td style="text-align:center">requests.post()</td>
+<td style="text-align:center">向网页提交 POST 请求，对应 HTTP 的 POST</td>
+</tr>
+<tr>
+<td style="text-align:center">requests.put()</td>
+<td style="text-align:center">向网页提交 PUT 请求，对应 HTTP 的 PUT</td>
+</tr>
+<tr>
+<td style="text-align:center">requests.patch()</td>
+<td style="text-align:center">向网页提交局部修改请求，对应 HTTP 的 PATCH</td>
+</tr>
+<tr>
+<td style="text-align:center">requests.delete()</td>
+<td style="text-align:center">向网页提交删除请求，对应 HTTP 的 DELETE</td>
+</tr>
+</tbody>
+</table>
+<h4 id="HTTP-协议中-6-种主要请求方式"><a href="#HTTP-协议中-6-种主要请求方式" class="headerlink" title="HTTP 协议中 6 种主要请求方式"></a>HTTP 协议中 6 种主要请求方式</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">方法</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">GET</td>
+<td style="text-align:center">请求获取 URL 位置的资源</td>
+</tr>
+<tr>
+<td style="text-align:center">HEAD</td>
+<td style="text-align:center">请求获取 URL 位置资源的响应消息报告，即获得该资源的头部信息</td>
+</tr>
+<tr>
+<td style="text-align:center">POST</td>
+<td style="text-align:center">请求向 URL 位置的资源后附加新的数据</td>
+</tr>
+<tr>
+<td style="text-align:center">PUT</td>
+<td style="text-align:center">请求向 URL 位置存储一个资源，覆盖原 URL 位置的资源</td>
+</tr>
+<tr>
+<td style="text-align:center">PATCH</td>
+<td style="text-align:center">请求局部更新 URL 位置的资源，即改变该处资源的部分内容</td>
+</tr>
+<tr>
+<td style="text-align:center">DELETE</td>
+<td style="text-align:center">请求删除 URL 位置存储的资源</td>
+</tr>
+</tbody>
+</table>
+<h4 id="request-方法"><a href="#request-方法" class="headerlink" title="request() 方法"></a>request() 方法</h4><p>基础方法，像 get() 、post() 等都是从此方法扩展而来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requests.request(method, url, **kwargs)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>method : 请求方式，对应 get / head / post / put / patch / delete / options  7 种</li>
+<li>url : 拟获取页面的 url 链接</li>
+<li>**kwargs: 控制访问的参数，均为可选项，共 13 个</li>
+</ul>
+<h5 id="kwargs-控制访问的参数"><a href="#kwargs-控制访问的参数" class="headerlink" title="**kwargs 控制访问的参数"></a>**kwargs 控制访问的参数</h5><p><strong>params</strong>：字典或字节序列，作为参数增加到 url 中</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">kv = &#123;<span class="string">'key1'</span>: <span class="string">'value1'</span>, <span class="string">'key2'</span>: <span class="string">'value2'</span>&#125;</span><br><span class="line">r = requests.request(<span class="string">'GET'</span>, <span class="string">"http://httpbin.org/get"</span>, params=kv)</span><br><span class="line">print(r.url)  <span class="comment"># http://httpbin.org/get?key1=value1&amp;key2=value2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 还可以将一个列表作为值传入</span></span><br><span class="line">kv = &#123;<span class="string">'key1'</span>: <span class="string">'value1'</span>, <span class="string">'key2'</span>: [<span class="string">'value2'</span>, <span class="string">'value3'</span>]&#125;</span><br><span class="line">r = requests.request(<span class="string">'GET'</span>, <span class="string">"http://httpbin.org/get"</span>, params=kv)</span><br><span class="line">print(r.url)  <span class="comment"># http://httpbin.org/get?key1=value1&amp;key2=value2&amp;key2=value3</span></span><br></pre></td></tr></table></figure>
+<p><strong>data</strong> ：字典、字节序列或文件对象，作为 Request 的内容</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">kv = &#123;<span class="string">'key1'</span>: <span class="string">'value1'</span>, <span class="string">'key2'</span>: <span class="string">'value2'</span>&#125;</span><br><span class="line">r = requests.request(<span class="string">'POST'</span>, <span class="string">"http://httpbin.org/post"</span>, data=kv)</span><br><span class="line">body = <span class="string">"文本内容"</span></span><br><span class="line">r = requests.request(<span class="string">'POST'</span>, <span class="string">"http://httpbin.org/post"</span>, data=body)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 表单中多个元素使用同一 key 的时候, 可以使用元组</span></span><br><span class="line">kv = ((<span class="string">'key1'</span>, <span class="string">'value1'</span>), (<span class="string">'key1'</span>, <span class="string">'value2'</span>))</span><br><span class="line">r = requests.request(<span class="string">'POST'</span>, <span class="string">"http://httpbin.org/post"</span>, data=kv)</span><br></pre></td></tr></table></figure>
+<p><strong>json</strong>：JSON 格式的数据，作为 Request 的内容，对应 <code>Content-Type: application/json</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">kv = &#123;<span class="string">'key1'</span>: <span class="string">'value1'</span>&#125;</span><br><span class="line">r = requests.request(<span class="string">'POST'</span>, <span class="string">'http://httpbin.org/post'</span>, json=kv)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可以用 data 实现, 需事先 import json</span></span><br><span class="line">kv = &#123;<span class="string">'key1'</span>: <span class="string">'value1'</span>&#125;</span><br><span class="line">r = requests.request(<span class="string">'POST'</span>, <span class="string">'http://httpbin.org/post'</span>, data=json.dumps(kv))</span><br></pre></td></tr></table></figure>
+<p><strong>headers</strong>：字典，HTTP 定制头</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">headers = &#123;<span class="string">'user-agent'</span>: <span class="string">'my-app/0.0.1'</span>&#125;</span><br><span class="line">r = requests.request(<span class="string">'GET'</span>, <span class="string">'https://api.github.com/some/endpoint'</span>, headers=headers)</span><br><span class="line">print(r.request.headers)</span><br><span class="line"><span class="comment"># &#123;'user-agent': 'my-app/0.0.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'&#125;</span></span><br></pre></td></tr></table></figure>
+<p><strong>cookies</strong>：字典或 CookieJar，Request 中的 cookie</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">'http://httpbin.org/cookies'</span></span><br><span class="line">cookies = dict(cookies_are=<span class="string">'working'</span>)</span><br><span class="line">r = requests.request(<span class="string">'GET'</span>, url, cookies=cookies)</span><br><span class="line">print(r.text) <span class="comment"># &#123;"cookies": &#123;"cookies_are": "working"&#125;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可以通过 RequestsCookieJar 设置</span></span><br><span class="line">cookieJar = requests.cookies.RequestsCookieJar()</span><br><span class="line">cookieJar.set(<span class="string">'tasty_cookie'</span>, <span class="string">'yum'</span>, domain=<span class="string">'httpbin.org'</span>, path=<span class="string">'/cookies'</span>)</span><br><span class="line">cookieJar.set(<span class="string">'gross_cookie'</span>, <span class="string">'blech'</span>, domain=<span class="string">'httpbin.org'</span>, path=<span class="string">'/elsewhere'</span>)</span><br><span class="line">cookieJar.set(<span class="string">'token'</span>, <span class="string">'1111111111111111111'</span>)</span><br><span class="line">url = <span class="string">'http://httpbin.org/cookies'</span></span><br><span class="line">r = requests.request(<span class="string">'GET'</span>, url, cookies=cookieJar)</span><br><span class="line">print(r.text)</span><br><span class="line"><span class="comment"># &#123;"cookies": &#123; "tasty_cookie": "yum", "token": "1111111111111111111"&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+<p><strong>auth</strong>：元组，支持 HTTP 认证功能，对应 headers 中的 <code>Authorization</code> 字段，Requests 提供两个常用的认证类：<code>HTTPBasicAuth</code> 和 <code>HTTPDigestAuth</code> ，也可以通过自定义类，但必须继承自 <code>AuthBase</code> 类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> requests.auth <span class="keyword">import</span> HTTPBasicAuth</span><br><span class="line"></span><br><span class="line">url = <span class="string">"https://api.github.com/repos/requests/requests/issues/482/comments"</span></span><br><span class="line">body = json.dumps(&#123;<span class="string">"body"</span>: <span class="string">"Sounds great! I'll get right on it!"</span>&#125;)</span><br><span class="line">auth = HTTPBasicAuth(<span class="string">'fake@example.com'</span>, <span class="string">'not_a_real_password'</span>)</span><br><span class="line">r = requests.post(url=url, data=body, auth=auth)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以上只是示例，具体要根据 api 提供真实数据</span></span><br></pre></td></tr></table></figure>
+<p><strong>files</strong>：字典类型，传输文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">url = <span class="string">'http://httpbin.org/post'</span></span><br><span class="line">files = &#123;<span class="string">'file'</span>: open(<span class="string">'report.xls'</span>, <span class="string">'rb'</span>)&#125;</span><br><span class="line">r = requests.request(<span class="string">'POST'</span>, url, files=files)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可以显式地设置文件名，文件类型和请求头：</span></span><br><span class="line">url = <span class="string">'http://httpbin.org/post'</span></span><br><span class="line">files = &#123;<span class="string">'file'</span>: (<span class="string">'report.xls'</span>, open(<span class="string">'report.xls'</span>, <span class="string">'rb'</span>), <span class="string">'application/vnd.ms-excel'</span>, &#123;<span class="string">'Expires'</span>: <span class="string">'0'</span>&#125;)&#125;</span><br><span class="line">r = requests.request(<span class="string">'POST'</span>, url, files=files)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可以发送作为文件来接收的字符串：</span></span><br><span class="line">url = <span class="string">'http://httpbin.org/post'</span></span><br><span class="line">files = &#123;<span class="string">'file'</span>: (<span class="string">'report.csv'</span>, <span class="string">'some,data,to,send\nanother,row,to,send\n'</span>)&#125;</span><br><span class="line">r = requests.request(<span class="string">'POST'</span>, url, files=files)</span><br></pre></td></tr></table></figure>
+<p><strong>timeout</strong>：设定超时时间，秒为单位</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">r = requests.request(<span class="string">'GET'</span>, <span class="string">'https://github.com'</span>, timeout=<span class="number">10</span>)</span><br><span class="line"><span class="comment"># 如果要分别设置连接超时和读取超时，可以用元组</span></span><br><span class="line">r = requests.request(<span class="string">'GET'</span>, <span class="string">'https://github.com'</span>, timeout=(<span class="number">10</span>, <span class="number">20</span>))</span><br><span class="line"><span class="comment"># 也可以让 Request 永远等待</span></span><br><span class="line">r = requests.request(<span class="string">'GET'</span>, <span class="string">'https://github.com'</span>, timeout=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>proxies</strong>：字典类型，设定访问代理服务器，可以增加登录认证</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">proxies = &#123;</span><br><span class="line">  <span class="string">"http"</span>: <span class="string">"http://10.10.1.10:3128"</span>,</span><br><span class="line">  <span class="string">"https"</span>: <span class="string">"http://10.10.1.10:1080"</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">requests.request(<span class="string">'GET'</span>, <span class="string">"http://example.org"</span>, proxies=proxies)</span><br></pre></td></tr></table></figure>
+<p><strong>allow_redirects</strong>：True/False，默认为 True，重定向开关<br><strong>stream</strong>：True/False，默认为 True，获取内容立即下载开关<br><strong>verify</strong>：True/False，默认为 True，认证 SSL 证书开关<br><strong>cert</strong>：本地 SSL 证书路径</p>
+<h4 id="get"><a href="#get" class="headerlink" title="get()"></a>get()</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requests.get(url, params=<span class="literal">None</span>, **kwargs)</span><br></pre></td></tr></table></figure>
+<h4 id="post"><a href="#post" class="headerlink" title="post()"></a>post()</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requests.post(url, data=<span class="literal">None</span>, json=<span class="literal">None</span>, **kwargs)</span><br></pre></td></tr></table></figure>
+<h4 id="head"><a href="#head" class="headerlink" title="head()"></a>head()</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requests.head(url, **kwargs)</span><br></pre></td></tr></table></figure>
+<h4 id="put"><a href="#put" class="headerlink" title="put()"></a>put()</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requests.put(url, data=<span class="literal">None</span>, **kwargs)</span><br></pre></td></tr></table></figure>
+<h4 id="patch"><a href="#patch" class="headerlink" title="patch()"></a>patch()</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requests.patch(url, data=<span class="literal">None</span>, **kwargs)</span><br></pre></td></tr></table></figure>
+<h4 id="delete"><a href="#delete" class="headerlink" title="delete()"></a>delete()</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requests.delete(url, **kwargs)</span><br></pre></td></tr></table></figure>
+<p>以上几个方法都是有 request() 方法演变而来，参数说明也都是一样的，就不一一举例了</p>
+<h4 id="Response-对象"><a href="#Response-对象" class="headerlink" title="Response 对象"></a>Response 对象</h4><p>包含爬虫返回的内容</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">r = requests.get(url)</span><br><span class="line"><span class="comment"># 这个 r 就是 Response 对象</span></span><br></pre></td></tr></table></figure>
+<p>几个重要属性</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">r.status_code</td>
+<td style="text-align:center">HTTP 请求的返回状态，200 表示连接成功，404 表示失败</td>
+</tr>
+<tr>
+<td style="text-align:center">r.text</td>
+<td style="text-align:center">HTTP 响应内容的字符串形式，即，url 对应的页面内容</td>
+</tr>
+<tr>
+<td style="text-align:center">r.encoding</td>
+<td style="text-align:center">从HTTP header 中猜测的响应内容编码方式</td>
+</tr>
+<tr>
+<td style="text-align:center">r.apparent_encoding</td>
+<td style="text-align:center">从内容中分析出的响应内容编码方式（备选编码方式）</td>
+</tr>
+<tr>
+<td style="text-align:center">r.content</td>
+<td style="text-align:center">HTTP响应内容的二进制形式</td>
+</tr>
+</tbody>
+</table>
+<p>注意：</p>
+<ul>
+<li>如果 header 中不存在 charset，则认为 r.encoding 的编码为 ISO‐8859‐1</li>
+<li>r.text 根据 r.encoding 显示网页内容</li>
+<li>r.apparent_encoding 是根据网页内容分析出的编码方式，可以看作是 r.encoding 的备选</li>
+</ul>
+<p>能从 Response 对象获取到的其他属性</p>
+<h5 id="cookies"><a href="#cookies" class="headerlink" title="cookies"></a>cookies</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">r = requests.get(<span class="string">'https://github.com'</span>)</span><br><span class="line">r.cookies <span class="comment"># 得到的是一个 RequestsCookieJar 对象</span></span><br><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> r.cookies.items():</span><br><span class="line">    print(k, <span class="string">":"</span>, v) // logged_in : no ......</span><br></pre></td></tr></table></figure>
+<h5 id="raise-for-status"><a href="#raise-for-status" class="headerlink" title="raise_for_status()"></a>raise_for_status()</h5><p>如果 r.status_code 不是200，产生异常 requests.HTTPError</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getHTMLText</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        r = requests.get(url)</span><br><span class="line">        r.raise_for_status()</span><br><span class="line">        r.encoding = r.apparent_encoding</span><br><span class="line">        <span class="keyword">return</span> r.text</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"出错了"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    url = <span class="string">'https://github.com'</span></span><br><span class="line">    print(getHTMLText(url))</span><br></pre></td></tr></table></figure>
+<h5 id="headers"><a href="#headers" class="headerlink" title="headers"></a>headers</h5><p>获取返回的 headers</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">r = requests.get(<span class="string">"https://github.com"</span>)</span><br><span class="line">print(r.headers) <span class="comment"># &#123;'Server': 'GitHub.com', 'Date': 'Thu, 18 ...</span></span><br></pre></td></tr></table></figure>
+<h5 id="request"><a href="#request" class="headerlink" title="request"></a>request</h5><p>获取到 Request 对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">r = requests.get(<span class="string">"https://github.com"</span>)</span><br><span class="line">print(r.request) <span class="comment"># &lt;PreparedRequest [GET]&gt;</span></span><br></pre></td></tr></table></figure>
+<p>通过 Request 对象可以得到请求相关信息，比如请求头</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">r = requests.get(<span class="string">"https://github.com"</span>)</span><br><span class="line">print(r.request.headers)</span><br><span class="line"><span class="comment"># &#123;'User-Agent': 'python-requests/2.19.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h4><p>除了刚说的返回时通过 raise_for_status() 来产生 HTTPError 异常外，Requests 库中定义了一些常见异常</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">异常</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">requests.ConnectionError</td>
+<td style="text-align:center">网络连接错误异常，如 DNS 查询失败、拒绝连接等</td>
+</tr>
+<tr>
+<td style="text-align:center">requests.HTTPError</td>
+<td style="text-align:center">HTTP 错误异常</td>
+</tr>
+<tr>
+<td style="text-align:center">requests.URLRequired</td>
+<td style="text-align:center">URL 缺失异常</td>
+</tr>
+<tr>
+<td style="text-align:center">requests.TooManyRedirects</td>
+<td style="text-align:center">超过最大重定向次数，产生重定向异常</td>
+</tr>
+<tr>
+<td style="text-align:center">requests.ConnectTimeout</td>
+<td style="text-align:center">连接远程服务器超时异常</td>
+</tr>
+<tr>
+<td style="text-align:center">requests.Timeout</td>
+<td style="text-align:center">请求 URL 超时，产生超时异常</td>
+</tr>
+</tbody>
+</table>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>爬取百度搜索结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">kw = <span class="string">"python"</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    kv = &#123;<span class="string">'wd'</span>: kw&#125;</span><br><span class="line">    r = requests.get(<span class="string">"http://www.baidu.com/s"</span>, params=kv)</span><br><span class="line">    print(r.request.url) <span class="comment"># http://www.baidu.com/s?wd=python</span></span><br><span class="line">    r.raise_for_status()</span><br><span class="line">    print(len(r.text)) <span class="comment"># 359225</span></span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    print(<span class="string">"爬取失败"</span>)</span><br></pre></td></tr></table></figure>
+<p>爬取图片并保存</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">url = <span class="string">'https://cdn.pixabay.com/photo/2018/10/05/09/45/cobweb-3725540_1280.jpg'</span></span><br><span class="line">path = <span class="string">'img/'</span></span><br><span class="line">file = path + url.split(<span class="string">'/'</span>)[<span class="number">-1</span>]</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(path):</span><br><span class="line">        os.mkdir(path)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(file):</span><br><span class="line">        r = requests.get(url)</span><br><span class="line">        print(r.status_code)</span><br><span class="line">        <span class="keyword">with</span> open(file, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">            f.write(r.content)</span><br><span class="line">            f.close()</span><br><span class="line">            print(<span class="string">'文件保存成功'</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">'文件已存在'</span>)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    print(type(e))</span><br><span class="line">    print(<span class="string">'出错了'</span>)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/16/Python-学习笔记（三）/" rel="next" title="Python 学习笔记（三）">
+                <i class="fa fa-chevron-left"></i> Python 学习笔记（三）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/24/Python-学习笔记（四）/" rel="prev" title="Python 学习笔记（四）">
+                Python 学习笔记（四） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">MK</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#7-个主要方法"><span class="nav-number">2.1.</span> <span class="nav-text">7 个主要方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-协议中-6-种主要请求方式"><span class="nav-number">2.2.</span> <span class="nav-text">HTTP 协议中 6 种主要请求方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#request-方法"><span class="nav-number">2.3.</span> <span class="nav-text">request() 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#kwargs-控制访问的参数"><span class="nav-number">2.3.1.</span> <span class="nav-text">**kwargs 控制访问的参数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get"><span class="nav-number">2.4.</span> <span class="nav-text">get()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#post"><span class="nav-number">2.5.</span> <span class="nav-text">post()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#head"><span class="nav-number">2.6.</span> <span class="nav-text">head()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#put"><span class="nav-number">2.7.</span> <span class="nav-text">put()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#patch"><span class="nav-number">2.8.</span> <span class="nav-text">patch()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#delete"><span class="nav-number">2.9.</span> <span class="nav-text">delete()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Response-对象"><span class="nav-number">2.10.</span> <span class="nav-text">Response 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#cookies"><span class="nav-number">2.10.1.</span> <span class="nav-text">cookies</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#raise-for-status"><span class="nav-number">2.10.2.</span> <span class="nav-text">raise_for_status()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#headers"><span class="nav-number">2.10.3.</span> <span class="nav-text">headers</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#request"><span class="nav-number">2.10.4.</span> <span class="nav-text">request</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#异常"><span class="nav-number">2.11.</span> <span class="nav-text">异常</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例"><span class="nav-number">3.</span> <span class="nav-text">示例</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MK</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

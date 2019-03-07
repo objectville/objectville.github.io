@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="想 hook 掉获取本机号码的方法，自己写的 demo 是成功的，但是设置里关于界面的本机号码还是没变，于是就想着去看看源码里设置里头的逻辑。在此之前，先说下事情起因">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在线查看 Android 系统源码">
+<meta property="og:url" content="http://yoursite.com/2018/07/04/在线查看-Android-系统源码/index.html">
+<meta property="og:site_name" content="对象村">
+<meta property="og:description" content="想 hook 掉获取本机号码的方法，自己写的 demo 是成功的，但是设置里关于界面的本机号码还是没变，于是就想着去看看源码里设置里头的逻辑。在此之前，先说下事情起因">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fswtr3297xj318222i417.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fswurnwstbj31kw11njxr.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fswutynjk8j31f40h6t9l.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fswuw2h2qnj31f6170aea.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fswuz7la36j31e80q4ace.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fswv1qyxgwj31ba0msadx.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fswv2nzlwgj31be0mu41q.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fsxkxzgeljj31kw1f5gwa.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fsxl0wdqy7j31kw14c7au.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fsxmvf3rdoj318e0kaabu.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fsxlj800zrj30ug1iewg3.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fsxmuh9g0yj31fo0siq4q.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fsxlw8afvkj31k41saqjt.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fsxm3nvo5aj311e0b60ua.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fsxm9yzxkuj31i20y4wjb.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fsxn0da7waj31ge1qiq8a.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fsxmiozq35j318222iacw.jpg">
+<meta property="og:updated_time" content="2019-03-07T01:41:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在线查看 Android 系统源码">
+<meta name="twitter:description" content="想 hook 掉获取本机号码的方法，自己写的 demo 是成功的，但是设置里关于界面的本机号码还是没变，于是就想着去看看源码里设置里头的逻辑。在此之前，先说下事情起因">
+<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fswtr3297xj318222i417.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/04/在线查看-Android-系统源码/">
+
+
+
+
+
+  <title>在线查看 Android 系统源码 | 对象村</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">对象村</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/04/在线查看-Android-系统源码/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MK">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="对象村">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">在线查看 Android 系统源码</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-04T10:52:06+08:00">
+                2018-07-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>想 hook 掉获取本机号码的方法，自己写的 demo 是成功的，但是设置里关于界面的本机号码还是没变，于是就想着去看看源码里设置里头的逻辑。在此之前，先说下事情起因<br><a id="more"></a></p>
+<h3 id="获取本机号码"><a href="#获取本机号码" class="headerlink" title="获取本机号码"></a>获取本机号码</h3><p>正常来说，我们可以通过以下代码获取到本机号码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">	val tm = this.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager</span><br><span class="line">    val tel = tm.line1Number</span><br><span class="line"></span><br><span class="line">    println(&quot;本机号码：$tel&quot;)</span><br><span class="line">&#125; catch (e: Exception) &#123;</span><br><span class="line">    e.printStackTrace()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里需要动态申请 <code>android.permission.READ_PHONE_STATE</code> 权限，不在本文的讨论的范围，代码就不搬了</p>
+<p>用模拟器得到本机号码为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">本机号码：15555218135</span><br></pre></td></tr></table></figure>
+<p>设置界面</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fswtr3297xj318222i417.jpg" alt></p>
+<p>没错就是这个方法，hook 掉</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">XposedBridge.hookAllMethods(TelephonyManager::class.java, &quot;getLine1Number&quot;, object : XC_MethodHook() &#123;</span><br><span class="line">	override fun afterHookedMethod(param: MethodHookParam?) &#123;</span><br><span class="line">    	super.afterHookedMethod(param)</span><br><span class="line">        param?.result = &quot;12345678900&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>利用 Xposed 来玩黑科技也不在本文讨论范围，以后会单独来讲 Xposed。现在就只要明白我这里把 <code>getLine1Number()</code> 的返回值修改成了 <code>12345678900</code> 就行了。运行看下效果</p>
+<p>自己 Demo 的 Log</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">本机号码：12345678900</span><br></pre></td></tr></table></figure>
+<p>嗯，成功了，再看设置界面，What！~ 还是一样的，因为设置界面里头啥也没变，就不贴图了，看上面的就行了。</p>
+<p>这下郁闷了，明明我把 <code>getLine1Number()</code>  方法的返回值修改了，而且自己的 Demo 也是成功的，为啥系统的设置界面没有改变呢？为了弄清楚，我需要知道设置界面里头获取本机号码的逻辑。可能调用的不是 <code>getLine1Number()</code> 方法，去看下源码吧</p>
+<h3 id="开启源码之旅"><a href="#开启源码之旅" class="headerlink" title="开启源码之旅"></a>开启源码之旅</h3><p>想看完整的源码，可以去官网下载对应的版本的源码，然后再利用专门的工具查看。不过这种方式有点得不偿失了，毕竟源码那么大。于是就想到了在线看源码的网站，这里重点推荐</p>
+<blockquote>
+<p><a href="http://androidxref.com/" target="_blank" rel="noopener">http://androidxref.com/</a></p>
+</blockquote>
+<p>界面长这样</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fswurnwstbj31kw11njxr.jpg" alt></p>
+<p>选择对应的版本，因为模拟器用的是 6.0.0 ，所以我这里选择 Marshmallow - 6.0.0_r5</p>
+<p>会看到如下界面，右侧用于选择源码中对应的架构</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fswutynjk8j31f40h6t9l.jpg" alt></p>
+<ul>
+<li>Full Search: 进行全文搜索，会匹配所有的单词、字符串、标识符以及数字等，例如在 frameworks 下通过 Full Search 搜索”Settings“</li>
+</ul>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fswuw2h2qnj31f6170aea.jpg" alt></p>
+<ul>
+<li>Definition：搜索符号定义相关的代码，例如搜索 ondraw 函数的定义，显示结果如图</li>
+</ul>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fswuz7la36j31e80q4ace.jpg" alt></p>
+<ul>
+<li>Symbol：搜索符号，例如可以搜索类中的成员变量等，下图显示了通过 Symbol 搜索FEATURE_NO_TITLE的结果</li>
+</ul>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fswv1qyxgwj31ba0msadx.jpg" alt></p>
+<ul>
+<li>File Path：搜索源码文件名中包含给定字符串的文件，例如想要搜索文件名包含 mediacodec的源码文件，则可以在 File Path 中填入 mediacodec 进行搜索，结果如下所示</li>
+</ul>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fswv2nzlwgj31be0mu41q.jpg" alt></p>
+<p>利用搜索确实可以快速定位到自己的需要的代码位置，但也可能不是想要的，所以别纠结为啥搜出来的不是自己想要的</p>
+<p>首先我需要知道设置界面所属的 Activity，利用 adb 指令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell dumpsys activity activities | sed -En -e &apos;/Running activities/,/Run #0/p&apos;</span><br></pre></td></tr></table></figure>
+<p>adb 指令查看当前与用户交互的 Activity 可以在以下文章查看</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/hty1053240123/article/details/54312614" target="_blank" rel="noopener">https://blog.csdn.net/hty1053240123/article/details/54312614</a></p>
+</blockquote>
+<p>显示结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell dumpsys activity activities | sed -En -e &apos;/Running activities/,/Run #0/p&apos;</span><br><span class="line">    Running activities (most recent first):</span><br><span class="line">      TaskRecord&#123;94f2ae6 #121 A=com.android.settings U=0 sz=4&#125;</span><br><span class="line">        Run #3: ActivityRecord&#123;3e6c25c u0 com.android.settings/.deviceinfo.SimStatus t121&#125;</span><br><span class="line">        Run #2: ActivityRecord&#123;7f87582 u0 com.android.settings/.deviceinfo.Status t121&#125;</span><br><span class="line">        Run #1: ActivityRecord&#123;1a41e5d u0 com.android.settings/.SubSettings t121&#125;</span><br><span class="line">        Run #0: ActivityRecord&#123;befd34b u0 com.android.settings/.Settings t121&#125;</span><br><span class="line">    Running activities (most recent first):</span><br><span class="line">      TaskRecord&#123;508fb48 #123 A=com.android.systemui U=0 sz=1&#125;</span><br><span class="line">        Run #1: ActivityRecord&#123;ce003fb u0 com.android.systemui/.recents.RecentsActivity t123&#125;</span><br><span class="line">      TaskRecord&#123;9ab8827 #120 I=com.android.launcher3/.Launcher U=0 sz=1&#125;</span><br><span class="line">        Run #0: ActivityRecord&#123;7c1da7f u0 com.android.launcher3/.Launcher t120&#125;</span><br></pre></td></tr></table></figure>
+<p>如果不需要看到所有栈里的 Activity，只想知道当前 Activity 的界面，可以用如下指令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell dumpsys activity | grep &quot;mFocusedActivity&quot;</span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell dumpsys activity | grep &quot;mFocusedActivity&quot;</span><br><span class="line">  mFocusedActivity: ActivityRecord&#123;3e6c25c u0 com.android.settings/.deviceinfo.SimStatus t121&#125;</span><br></pre></td></tr></table></figure>
+<p>这样我们就知道了，显示本机号码的这个界面的 Activity 叫 <code>SimStatus</code> ，其中<code>com.android.settings</code> 是包名，<code>设置</code> 在手机里也是一个应用，包名就是<code>com.android.settings</code></p>
+<p>知道了要查看的类，现在我们去搜索下</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fsxkxzgeljj31kw1f5gwa.jpg" alt></p>
+<p>其实如果我们对 Android 系统有些了解的话，就应该知道所有系统里面的应用，都在 packages 工程下面，所以在选择工程的时候，选择对应的工程，会给我们过滤掉很多无关的结果，如</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fsxl0wdqy7j31kw14c7au.jpg" alt></p>
+<p>这个不是很明显，只少了3个结果，不过我们已经找到想找的类了，点击 <code>SimStatus</code> 进去，简单查看之后，找到了关键代码</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fsxmvf3rdoj318e0kaabu.jpg" alt></p>
+<p>这就是 6.0.0 系统里头，关于本机号码的代码，一看就明白为啥我 hook 掉 <code>getLine1Number()</code> ，但是设置界面里头却没有改变，本来想直接<code>getLine1NumberForSubscriber()</code> 方法 hook 掉就可以了，但自己在 Android Studio 去查看 <code>TelephonyManager</code> 源码的时候，发现没有 <code>getLine1NumberForSubscriber()</code> 这个方法，因为我用的 SDK 源码是 android-27，也就是 8.1 的系统。既然不同系统里头 <code>TelephonyManager</code> 的源码不同，那设置界面的源码可能也会不同。为了验证下，打开一个 8.0 系统的模拟器（因为有一个现成的）</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fsxlj800zrj30ug1iewg3.jpg" alt></p>
+<p>利用 adb 指令查看到当前界面的 Activity</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ adb shell dumpsys activity activities | sed -En -e &apos;/Running activities/,/Run #0/p&apos;</span><br><span class="line">    Running activities (most recent first):</span><br><span class="line">      TaskRecord&#123;c2ff9d #679 A=com.android.settings U=0 StackId=1 sz=5&#125;</span><br><span class="line">        Run #4: ActivityRecord&#123;57ebfcb u0 com.android.settings/.Settings$SimStatusActivity t679&#125;</span><br><span class="line">        Run #3: ActivityRecord&#123;e36cc30 u0 com.android.settings/.SubSettings t679&#125;</span><br><span class="line">        Run #2: ActivityRecord&#123;84dfdcd u0 com.android.settings/.SubSettings t679&#125;</span><br><span class="line">        Run #1: ActivityRecord&#123;999a704 u0 com.android.settings/.Settings$SystemDashboardActivity t679&#125;</span><br><span class="line">        Run #0: ActivityRecord&#123;6e438c5 u0 com.android.settings/.Settings t679&#125;</span><br><span class="line">    Running activities (most recent first):</span><br><span class="line">      TaskRecord&#123;d56dc12 #676 I=com.google.android.apps.nexuslauncher/.NexusLauncherActivity U=0 StackId=0 sz=1&#125;</span><br><span class="line">        Run #0: ActivityRecord&#123;5180a24 u0 com.google.android.apps.nexuslauncher/.NexusLauncherActivity t676&#125;</span><br><span class="line">    Running activities (most recent first):</span><br><span class="line">      TaskRecord&#123;cf55fe3 #678 A=com.android.systemui U=0 StackId=5 sz=1&#125;</span><br><span class="line">        Run #0: ActivityRecord&#123;b454879 u0 com.android.systemui/.recents.RecentsActivity t678&#125;</span><br></pre></td></tr></table></figure>
+<p>这里又发现一个问题，那就是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell dumpsys activity | grep &quot;mFocusedActivity&quot;</span><br></pre></td></tr></table></figure>
+<p>这个指令得不到想要的结果，没办法用查看到所有的了</p>
+<p>通过上面的结果，我们知道我们想要的界面的 Activity 是 <code>SimStatusActivity</code>，那去搜索一下试试</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fsxmuh9g0yj31fo0siq4q.jpg" alt></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fsxlw8afvkj31k41saqjt.jpg" alt></p>
+<p>静态内部类，实现里头还是空的，这里不去分析怎么找到具体代码了，我们返回一步，来到 <code>AndroidManifest.xml</code>，找到 <code>SimStatusActivity</code></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fsxm3nvo5aj311e0b60ua.jpg" alt></p>
+<p>点击里头的 <code>com.android.settings.deviceinfo.SimStatus</code></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fsxm9yzxkuj31i20y4wjb.jpg" alt></p>
+<p>然后再来到 <code>DeviceInfoUtils</code></p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fsxn0da7waj31ge1qiq8a.jpg" alt></p>
+<p>发现这里又是调用的 <code>getLine1Number()</code> 方法了，果然不同系统不同。不同也发现一个相同的地方，那就是他们最后都会调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PhoneNumberUtils.formatNumber(rawNumber)</span><br></pre></td></tr></table></figure>
+<p>更改策略，把 <code>formatNumber()</code> 方法 hook 掉</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">XposedBridge.hookAllMethods(PhoneNumberUtils::class.java, &quot;formatNumber&quot;, object : XC_MethodHook() &#123;</span><br><span class="line">	override fun afterHookedMethod(param: MethodHookParam?) &#123;</span><br><span class="line">    	super.afterHookedMethod(param)</span><br><span class="line">        param?.result = &quot;+8612345678900&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>现在再来看设置界面的本机号码</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fsxmiozq35j318222iacw.jpg" alt></p>
+<p>OK，成功了！</p>
+<p>因为想玩点黑科技，又去拾起了系统源码，虽然很浅显，但也明白源码并不惧怕，以后如果需要找点什么，也不会一头雾水了，关于文中提到的 Xposed ，将会在另一篇文章中简单介绍。</p>
+<p>仅以此记录。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/28/Android-Studio-XML-中的Tools属性/" rel="next" title="Android Studio XML 中的Tools属性">
+                <i class="fa fa-chevron-left"></i> Android Studio XML 中的Tools属性
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/07/Android-解决启动时白屏或黑屏问题/" rel="prev" title="Android 解决启动时白屏或黑屏问题">
+                Android 解决启动时白屏或黑屏问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">MK</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取本机号码"><span class="nav-number">1.</span> <span class="nav-text">获取本机号码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启源码之旅"><span class="nav-number">2.</span> <span class="nav-text">开启源码之旅</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MK</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

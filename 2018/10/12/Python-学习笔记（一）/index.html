@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="欢迎来到 Python 的世界">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 学习笔记（一）">
+<meta property="og:url" content="http://yoursite.com/2018/10/12/Python-学习笔记（一）/index.html">
+<meta property="og:site_name" content="对象村">
+<meta property="og:description" content="欢迎来到 Python 的世界">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-07T01:41:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python 学习笔记（一）">
+<meta name="twitter:description" content="欢迎来到 Python 的世界">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/12/Python-学习笔记（一）/">
+
+
+
+
+
+  <title>Python 学习笔记（一） | 对象村</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">对象村</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/12/Python-学习笔记（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MK">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="对象村">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python 学习笔记（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-12T14:14:24+08:00">
+                2018-10-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>欢迎来到 Python 的世界<br><a id="more"></a></p>
+<h3 id="Python-概述"><a href="#Python-概述" class="headerlink" title="Python 概述"></a>Python 概述</h3><p>译为”蟒蛇”, 诞生于1990年，创造者：Guido van Rossum<br>2002年，Python 2.x<br>2008年，Python 3.x<br>Python 是一个有开放、开源精神的脚本语言。让我们进入 Python 的世界</p>
+<h3 id="一、Python-基本语法元素"><a href="#一、Python-基本语法元素" class="headerlink" title="一、Python 基本语法元素"></a>一、Python 基本语法元素</h3><h4 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h4><p>一行代码开始前的空白区域，表达程序的格式框架</p>
+<ul>
+<li>严格明确：缩进是语法的一部分，缩进不正确程序运行错误</li>
+<li>所属关系：表达代码间包含和层次关系的唯一手段</li>
+<li>长度一致：程序内一致即可，一般用4个空格或1个TAB</li>
+</ul>
+<h4 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h4><p>用于提高代码可读性的辅助性文字，不被执行</p>
+<ul>
+<li><p>单行注释：以#开头，其后内容为注释</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># 这里是单行注释</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多行注释：以’’’开头和结尾</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&apos;&apos;&apos; 这是多行注释第一行</span><br><span class="line">    这是多行注释第二行 &apos;&apos;&apos;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><ul>
+<li>命名规则: 大小写字母、数字、下划线和中文等字符及组合。</li>
+<li>注意事项: 大小写敏感、首字符不能是数字、不与保留字相同。</li>
+</ul>
+<h4 id="保留字"><a href="#保留字" class="headerlink" title="保留字"></a>保留字</h4><p>被编程语言内部定义并保留使用的标识符</p>
+<ul>
+<li>Python语言有33个保留字(也叫关键字)</li>
+<li>保留字是编程语言的基本单词，大小写敏感</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+<th style="text-align:center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">and</td>
+<td style="text-align:center">elif</td>
+<td style="text-align:center">import</td>
+<td style="text-align:center">raise</td>
+<td style="text-align:center">global</td>
+</tr>
+<tr>
+<td style="text-align:center">as</td>
+<td style="text-align:center">else</td>
+<td style="text-align:center">in</td>
+<td style="text-align:center">return</td>
+<td style="text-align:center">nonlocal</td>
+</tr>
+<tr>
+<td style="text-align:center">assert</td>
+<td style="text-align:center">except</td>
+<td style="text-align:center">is</td>
+<td style="text-align:center">try</td>
+<td style="text-align:center">True</td>
+</tr>
+<tr>
+<td style="text-align:center">break</td>
+<td style="text-align:center">finally</td>
+<td style="text-align:center">lambda</td>
+<td style="text-align:center">while</td>
+<td style="text-align:center">False</td>
+</tr>
+<tr>
+<td style="text-align:center">class</td>
+<td style="text-align:center">for</td>
+<td style="text-align:center">not</td>
+<td style="text-align:center">with</td>
+<td style="text-align:center">None</td>
+</tr>
+<tr>
+<td style="text-align:center">continue</td>
+<td style="text-align:center">from</td>
+<td style="text-align:center">or</td>
+<td style="text-align:center">yield</td>
+</tr>
+<tr>
+<td style="text-align:center">def</td>
+<td style="text-align:center">if</td>
+<td style="text-align:center">pass</td>
+<td style="text-align:center">del</td>
+</tr>
+</tbody>
+</table>
+<h4 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h4><h5 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h5><ul>
+<li>字符串由一对单引号或一对双引号表示。</li>
+<li>字符串是字符的有序序列，可以对其中的字符进行索引。</li>
+</ul>
+<h5 id="数字类型"><a href="#数字类型" class="headerlink" title="数字类型"></a>数字类型</h5><ul>
+<li>整数：数学中的整数。</li>
+<li>浮点数：数学中的实数，带有小数部分。</li>
+</ul>
+<h5 id="列表类型"><a href="#列表类型" class="headerlink" title="列表类型"></a>列表类型</h5><p>由0个或多个数据组成的有序序列</p>
+<ul>
+<li>列表使用[ ]表示，采用逗号(,)分隔各元素。</li>
+<li>使用保留字 in 判断一个元素是否在列表中。</li>
+</ul>
+<h4 id="温度转换示例"><a href="#温度转换示例" class="headerlink" title="温度转换示例"></a>温度转换示例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># input()：从控制台获得用户输入的函数</span><br><span class="line">TempStr = input(&quot;请输入带有符号的温度值：&quot;)</span><br><span class="line">if TempStr[-1] in [&apos;F&apos;, &apos;f&apos;]:</span><br><span class="line">    # eval()：去掉参数最外侧引号并执行余下语句的函数</span><br><span class="line">    C = (eval(TempStr[0:-1]) - 32) / 1.8</span><br><span class="line">    print(&quot;转换后的温度是&#123;:.2f&#125;C&quot;.format(C))</span><br><span class="line">elif TempStr[-1] in [&apos;C&apos;, &apos;c&apos;]:</span><br><span class="line">    F = 1.8 * eval(TempStr[0:-1]) + 32</span><br><span class="line">    print(&quot;转换后的温度是&#123;:.2f&#125;F&quot;.format(F))</span><br><span class="line">else:</span><br><span class="line">    print(&quot;输入格式错误&quot;)</span><br></pre></td></tr></table></figure>
+<h3 id="二、Python-基本图形绘制"><a href="#二、Python-基本图形绘制" class="headerlink" title="二、Python 基本图形绘制"></a>二、Python 基本图形绘制</h3><p>turtle（海龟）库的使用</p>
+<h4 id="turtle-库基本介绍"><a href="#turtle-库基本介绍" class="headerlink" title="turtle 库基本介绍"></a>turtle 库基本介绍</h4><ul>
+<li>turtle 绘图体系：1969 年诞生，主要用于程序设计入门</li>
+<li>Python 语言的标准库之一</li>
+<li>入门级的图形绘制函数库</li>
+</ul>
+<h5 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h5><ul>
+<li>标准库：随解释器直接安装到操作系统中的功能模块</li>
+<li>第三方库：需要经过安装才能使用的功能模块</li>
+<li>库 Library、包 Package、模块 Module，统称模块</li>
+</ul>
+<h4 id="turtle-绘图窗体"><a href="#turtle-绘图窗体" class="headerlink" title="turtle 绘图窗体"></a>turtle 绘图窗体</h4><p>turtle.setup(width, height, startx, starty)</p>
+<ul>
+<li>setup() 设置窗体大小及位置</li>
+<li>4个参数中后两个可选</li>
+<li>setup() 不是必须的</li>
+</ul>
+<h4 id="turtle-空间坐标体系"><a href="#turtle-空间坐标体系" class="headerlink" title="turtle 空间坐标体系"></a>turtle 空间坐标体系</h4><h5 id="绝对坐标"><a href="#绝对坐标" class="headerlink" title="绝对坐标"></a>绝对坐标</h5><ul>
+<li>turtle 窗体的正中心为原点（0，0），向右 x 正轴，向上 y 正轴</li>
+<li>turtle.goto(x, y)  移动到指定位置</li>
+</ul>
+<h5 id="海龟坐标"><a href="#海龟坐标" class="headerlink" title="海龟坐标"></a>海龟坐标</h5><ul>
+<li>以海龟为参照，分前进方向，后退方向，左侧方向，右侧方向</li>
+<li>初始位置为绝对坐标原点，前进方向为 x 轴正向</li>
+</ul>
+<h4 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h4><ul>
+<li>turtle.circle(r,angle) 画圆弧，r 半径，angle 角度</li>
+<li>turtle.fd(d) 前进距离</li>
+<li>turtle.bk(d) 后退距离</li>
+<li>turtle.seth(angle) 改变海龟行进方向，angle 为绝对度数</li>
+<li>turtle.left(angle) 向左转， angle 为相对度数</li>
+<li>turtle.right(angle) 向右转，angle 为相对度数</li>
+</ul>
+<h4 id="turtle-的-RGB-色彩模式"><a href="#turtle-的-RGB-色彩模式" class="headerlink" title="turtle 的 RGB 色彩模式"></a>turtle 的 RGB 色彩模式</h4><p>默认采用小数值 可切换为整数值<br>turtle.colormode(mode)</p>
+<ul>
+<li>1.0：RGB 小数值模式</li>
+<li>255：RGB 整数值模式</li>
+</ul>
+<h4 id="库引用"><a href="#库引用" class="headerlink" title="库引用"></a>库引用</h4><p>使用 import 关键字，可结合 from 和 as 一起使用</p>
+<ul>
+<li>import &lt;库名&gt;</li>
+<li>from &lt;库名&gt; import &lt;函数名&gt;</li>
+<li>from &lt;库名&gt; import *</li>
+<li>import &lt;库名&gt; as &lt;库别名&gt;</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import turtle</span><br><span class="line">from turtle import *</span><br><span class="line">import turtle as t</span><br></pre></td></tr></table></figure>
+<h4 id="turtle-画笔控制函数"><a href="#turtle-画笔控制函数" class="headerlink" title="turtle 画笔控制函数"></a>turtle 画笔控制函数</h4><p>画笔设置后一直有效，直至下次重新设置</p>
+<ul>
+<li>turtle.penup() 别名 turtle.pu() ，抬起画笔，海龟在飞行</li>
+<li>turtle.pendown() 别名 turtle.pd()，落下画笔，海龟在爬行</li>
+<li>turtle.pensize(width) 别名 turtle.width(width)，画笔宽度，海龟的腰围</li>
+<li>turtle.pencolor(color) color 为颜色字符串或 r,g,b 值，画笔颜色，海龟在涂装<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pencolor(color)的 color 参与可以有三种形式：</span><br><span class="line">颜色字符串 ：turtle.pencolor(&quot;purple&quot;)</span><br><span class="line">RGB的小数值：turtle.pencolor(0.63, 0.13, 0.94)</span><br><span class="line">RGB的元组值：turtle.pencolor((0.63,0.13,0.94))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="turtle-运动控制函数"><a href="#turtle-运动控制函数" class="headerlink" title="turtle 运动控制函数"></a>turtle 运动控制函数</h4><ul>
+<li>turtle.forward(d) 别名 turtle.fd(d)，向前行进，海龟走直线，d 表示行进距离，可以为负数</li>
+<li>turtle.circle(r, extent=None) 根据半径 r 绘制 extent 角度的弧形，r 默认圆心在海龟左侧 r 距离的位置，extent 默认是 360 度整圆</li>
+</ul>
+<h4 id="turtle-方向控制函数"><a href="#turtle-方向控制函数" class="headerlink" title="turtle 方向控制函数"></a>turtle 方向控制函数</h4><ul>
+<li>turtle.setheading(angle) 别名 turtle.seth(angle)，改变行进方向，海龟走角度，angle 绝对角度</li>
+<li>turtle.left(angle) 海龟向左转，angle 相对角度</li>
+<li>turtle.right(angle) 海龟向右转，angle 相对角度</li>
+</ul>
+<h4 id="蟒蛇绘制示例"><a href="#蟒蛇绘制示例" class="headerlink" title="蟒蛇绘制示例"></a>蟒蛇绘制示例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import turtle</span><br><span class="line">turtle.setup(650, 350, 200, 200)</span><br><span class="line">turtle.penup()</span><br><span class="line">turtle.fd(-250)</span><br><span class="line">turtle.pendown()</span><br><span class="line">turtle.pensize(25)</span><br><span class="line">turtle.pencolor(&quot;purple&quot;)</span><br><span class="line">turtle.seth(-40)</span><br><span class="line"># range() 函数 产生循环计数序列</span><br><span class="line"># range(N) 产生 0 到 N-1的整数序列，共N个</span><br><span class="line"># range(M,N) 产生 M 到 N-1的整数序列，共N-M个</span><br><span class="line">for i in range(4):</span><br><span class="line">    turtle.circle(40, 80)</span><br><span class="line">    turtle.circle(-40, 80)</span><br><span class="line">turtle.circle(40, 80 / 2)</span><br><span class="line">turtle.fd(40)</span><br><span class="line">turtle.circle(16, 180)</span><br><span class="line">turtle.fd(40 * 2 / 3)</span><br><span class="line">turtle.done()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/20/听《上瘾》有感/" rel="next" title="听《上瘾》有感">
+                <i class="fa fa-chevron-left"></i> 听《上瘾》有感
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/12/Python-学习笔记（二）/" rel="prev" title="Python 学习笔记（二）">
+                Python 学习笔记（二） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">MK</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-概述"><span class="nav-number">1.</span> <span class="nav-text">Python 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一、Python-基本语法元素"><span class="nav-number">2.</span> <span class="nav-text">一、Python 基本语法元素</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#缩进"><span class="nav-number">2.1.</span> <span class="nav-text">缩进</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注释"><span class="nav-number">2.2.</span> <span class="nav-text">注释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变量"><span class="nav-number">2.3.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#保留字"><span class="nav-number">2.4.</span> <span class="nav-text">保留字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据类型"><span class="nav-number">2.5.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#字符串"><span class="nav-number">2.5.1.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#数字类型"><span class="nav-number">2.5.2.</span> <span class="nav-text">数字类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#列表类型"><span class="nav-number">2.5.3.</span> <span class="nav-text">列表类型</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#温度转换示例"><span class="nav-number">2.6.</span> <span class="nav-text">温度转换示例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、Python-基本图形绘制"><span class="nav-number">3.</span> <span class="nav-text">二、Python 基本图形绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#turtle-库基本介绍"><span class="nav-number">3.1.</span> <span class="nav-text">turtle 库基本介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#小知识"><span class="nav-number">3.1.1.</span> <span class="nav-text">小知识</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#turtle-绘图窗体"><span class="nav-number">3.2.</span> <span class="nav-text">turtle 绘图窗体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#turtle-空间坐标体系"><span class="nav-number">3.3.</span> <span class="nav-text">turtle 空间坐标体系</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#绝对坐标"><span class="nav-number">3.3.1.</span> <span class="nav-text">绝对坐标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#海龟坐标"><span class="nav-number">3.3.2.</span> <span class="nav-text">海龟坐标</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用方法"><span class="nav-number">3.4.</span> <span class="nav-text">常用方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#turtle-的-RGB-色彩模式"><span class="nav-number">3.5.</span> <span class="nav-text">turtle 的 RGB 色彩模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#库引用"><span class="nav-number">3.6.</span> <span class="nav-text">库引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#turtle-画笔控制函数"><span class="nav-number">3.7.</span> <span class="nav-text">turtle 画笔控制函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#turtle-运动控制函数"><span class="nav-number">3.8.</span> <span class="nav-text">turtle 运动控制函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#turtle-方向控制函数"><span class="nav-number">3.9.</span> <span class="nav-text">turtle 方向控制函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#蟒蛇绘制示例"><span class="nav-number">3.10.</span> <span class="nav-text">蟒蛇绘制示例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MK</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
