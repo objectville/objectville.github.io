@@ -79,17 +79,19 @@
 
 
 
-<meta name="description" content="欢迎来到对象村！">
+<meta name="description" content="系统的 ProgressBar 没法完成 UI 效果，故进行简单自定义">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HelloWorld">
-<meta property="og:url" content="http://yoursite.com/2018/05/04/HelloWorld/index.html">
+<meta property="og:title" content="Android 自定义带文字的 ProgressBar">
+<meta property="og:url" content="http://yoursite.com/2019/04/13/Android-自定义带文字的-ProgressBar/index.html">
 <meta property="og:site_name" content="对象村">
-<meta property="og:description" content="欢迎来到对象村！">
+<meta property="og:description" content="系统的 ProgressBar 没法完成 UI 效果，故进行简单自定义">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-07T01:41:24.000Z">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1g2150xgxoyj312q02kq2p.jpg">
+<meta property="og:updated_time" content="2019-04-13T09:43:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HelloWorld">
-<meta name="twitter:description" content="欢迎来到对象村！">
+<meta name="twitter:title" content="Android 自定义带文字的 ProgressBar">
+<meta name="twitter:description" content="系统的 ProgressBar 没法完成 UI 效果，故进行简单自定义">
+<meta name="twitter:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1g2150xgxoyj312q02kq2p.jpg">
 
 
 
@@ -119,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/04/HelloWorld/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/13/Android-自定义带文字的-ProgressBar/">
 
 
 
 
 
-  <title>HelloWorld | 对象村</title>
+  <title>Android 自定义带文字的 ProgressBar | 对象村</title>
   
 
 
@@ -232,7 +234,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/04/HelloWorld/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/13/Android-自定义带文字的-ProgressBar/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MK">
@@ -249,7 +251,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">HelloWorld</h1>
+          <h1 class="post-title" itemprop="name headline">Android 自定义带文字的 ProgressBar</h1>
         
 
         <div class="post-meta">
@@ -261,8 +263,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-04T12:03:43+08:00">
-                2018-05-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-13T17:42:40+08:00">
+                2019-04-13
               </time>
             
 
@@ -299,7 +301,12 @@
       
 
       
-        <p>欢迎来到对象村！</p>
+        <p>系统的 ProgressBar 没法完成 UI 效果，故进行简单自定义<br><a id="more"></a><br>效果：</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1g2150xgxoyj312q02kq2p.jpg" alt></p>
+<p>系统默认是没有文字的</p>
+<p>代码：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TextProgressBar</span> <span class="meta">@JvmOverloads</span> <span class="keyword">constructor</span></span>(context: Context, attributeSet: AttributeSet? = <span class="literal">null</span>, defAttrStyle: <span class="built_in">Int</span> = <span class="number">0</span>) : ProgressBar(context, attributeSet, defAttrStyle) &#123;</span><br><span class="line">    <span class="keyword">var</span> text = <span class="string">"0%"</span></span><br><span class="line">    <span class="keyword">var</span> mPaint = Paint()</span><br><span class="line">    <span class="keyword">var</span> rect = Rect()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">init</span> &#123;</span><br><span class="line">        mPaint.color = Color.BLACK</span><br><span class="line">        mPaint.textSize = <span class="number">20f</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">setText</span><span class="params">(progress:<span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">        <span class="keyword">val</span> i = progress * <span class="number">100</span> / max</span><br><span class="line">        <span class="keyword">this</span>.text = <span class="string">"<span class="variable">$i</span>%"</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">setProgress</span><span class="params">(progress: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">        setText(progress)</span><br><span class="line">        <span class="keyword">super</span>.setProgress(progress)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onDraw</span><span class="params">(canvas: <span class="type">Canvas</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onDraw(canvas)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.mPaint.getTextBounds(<span class="keyword">this</span>.text, <span class="number">0</span>, text.length, rect)</span><br><span class="line">        <span class="keyword">var</span> x = width * (progress * <span class="number">1f</span> / max) - rect.width() - <span class="number">10</span></span><br><span class="line">        <span class="keyword">if</span> (x &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            x = <span class="number">0f</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">val</span> y = height / <span class="number">2</span> - rect.centerY()</span><br><span class="line">        canvas?.drawText(<span class="keyword">this</span>.text, x, y.toFloat(), <span class="keyword">this</span>.mPaint)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>酱紫</p>
 
       
     </div>
@@ -324,15 +331,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/04/04/简单介绍行业指数/" rel="next" title="简单介绍行业指数">
+                <i class="fa fa-chevron-left"></i> 简单介绍行业指数
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/04/Mac-下用-github-pages-搭建自己的博客-一/" rel="prev" title="Mac 下用 github pages 搭建自己的博客(一)">
-                Mac 下用 github pages 搭建自己的博客(一) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
